@@ -1,10 +1,12 @@
+# coding=utf-8
+
 from Item import Item
 
 class ItemUsable(Item):
 
     #Método de criação
-    def __init__(self, price, valueRecovery):
-        Item.__init__(self, price)
+    def __init__(self, name, price, valueRecovery):
+        Item.__init__(self, name, price)
         self._valueRecovery = valueRecovery
 
     #Métodos getter e setters
@@ -17,14 +19,14 @@ class ItemUsable(Item):
 
 class Food(ItemUsable):
     #Método de criação
-    def __init__(self, price, valueRecovery):
-        ItemUsable.__init__(self, price, valueRecovery)
+    def __init__(self, name, price, valueRecovery):
+        ItemUsable.__init__(self, name, price, valueRecovery)
 
 
 class Brush(ItemUsable):
     #Método de criação
-    def __init__(self, price, valueRecovery):
-        ItemUsable.__init__(self, price, valueRecovery)
+    def __init__(self, name, price, valueRecovery):
+        ItemUsable.__init__(self, name, price, valueRecovery)
 
 '''
 i = Food(400, 10)

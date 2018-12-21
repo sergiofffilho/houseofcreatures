@@ -1,9 +1,11 @@
+# coding=utf-8
+
 from Item import Item
 
 class ItemEquipment(Item):
     #Método de criação
-    def __init__(self, price, equipped=False):
-        Item.__init__(self, price)
+    def __init__(self, name, price, equipped=False):
+        Item.__init__(self, name, price)
         self._equipped = equipped
 
     #Métodos getters e setters
@@ -15,8 +17,9 @@ class ItemEquipment(Item):
         self._equipped = value
 
 class Decoration(ItemEquipment):
-    def __init__(self, price, equipped=False):
-        ItemEquipment.__init__(self, price, equipped)
+    #Método de criação
+    def __init__(self, name, price, equipped=False):
+        ItemEquipment.__init__(self, name, price, equipped)
 
 '''
 i = Decoration(400)
