@@ -5,11 +5,37 @@ class Hall():
     def __init__(self):
         self.images_list = {}
 
+        self.clock = pygame.time.Clock() # Tempo de jogo
+
+    def oppening(self):
+        crashed = False
+
         background = pygame.image.load("../images/background_big.png").convert_alpha()
         background = pygame.transform.scale(background, (360, 640))
         self.images_list[background] = (0,0)
 
-        self.clock = pygame.time.Clock() # Tempo de jogo
+        detective = pygame.image.load("../images/animal_tutorial_cat.png").convert_alpha()
+        detective = pygame.transform.scale(detective, (360, 640))
+        self.images_list[detective] = (0,0)
+
+        bubble = pygame.image.load("../images/icon_bubble.png").convert_alpha()
+        bubble = pygame.transform.scale(bubble, (200, 200))
+        self.images_list[bubble] = (0,50)
+
+        font_ballon = pygame.font.SysFont("Arial", 18)
+        text_ballon = font_ballon.render("Tap on the Box", False, (0,0,0))
+        self.images_list[text_ballon] = (40,110)
+
+        while not crashed:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    crashed = True
+
+            blit_images(screen, self.images_list)
+            pygame.display.update() # Mostra frame
+            self.clock.tick(60) # fps
+        pygame.quit()
+        quit()
 
     def loop(self):
         crashed = False
@@ -59,7 +85,7 @@ class Menu():
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         print "clicou"
                         hall = Hall()
-                        hall.loop()
+                        hall.oppening()
 
                 if event.type == pygame.QUIT:
                     crashed = True
