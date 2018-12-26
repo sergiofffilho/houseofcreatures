@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from ItemUsable import Food, Brush
 from ItemEquipment import Decoration
 
@@ -30,14 +32,21 @@ class Inventory:
         return self._itensUsable
     @itensUsable.setter
     def itensUsable(self, value):
-        self._itensUsable = value
+        try:
+            self._itensUsable[value] += 1
+        except KeyError:
+            self._itensUsable[value] = 1
 
     @property
     def itensEquipment(self):
         return self._itensEquipment
     @itensEquipment.setter
     def itensEquipment(self, value):
-        self._itensEquipment = value
+        try:
+            self._itensEquipment[value] += 1
+        except KeyError:
+            self._itensEquipment[value] = 1
+
 
 '''
 o = Food("osso", 100, 10)

@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from ItemUsable import Food, Brush
 from ItemEquipment import Decoration
 
@@ -29,7 +31,7 @@ class Store:
         return self._itens
     @itens.setter
     def itens(self, value):
-        self._itens = itens
+        self._itens.append(value)
 
 '''
 o = Food("osso", 100, 10)

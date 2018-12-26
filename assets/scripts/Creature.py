@@ -1,3 +1,5 @@
+# coding=utf-8
+
 class Creature:
     __count_creatures = 0
 
@@ -37,21 +39,27 @@ class Creature:
         return self._hapness
     @hapness.setter
     def hapness(self, value):
-        self._hapness= value
+        self._hapness = value
+        if self._hapness > 100:
+            self._hapness = 100
 
     @property
     def hungry(self):
         return self._hungry
     @hungry.setter
     def hungry(self, value):
-        self._hungry= value
+        self._hungry = value
+        if self._hungry > 100:
+            self._hungry = 100
 
     @property
     def hygiene(self):
         return self._hygiene
     @hygiene.setter
     def hygiene(self, value):
-        self._hygiene= value
+        self._hygiene = value
+        if self._hygiene > 100:
+            self._hygiene = 100
 
     #Métodos de classe
     @classmethod

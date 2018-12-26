@@ -20,4 +20,4 @@ class Player:
         return self._creatures
     @creatures.setter
     def creatures(self, value):
-        self._creatures = value
+        self._creatures.append(value)
