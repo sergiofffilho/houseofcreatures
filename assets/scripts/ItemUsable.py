@@ -22,7 +22,6 @@ class Food(ItemUsable):
     def __init__(self, name, price, valueRecovery):
         ItemUsable.__init__(self, name, price, valueRecovery)
 
-
 class Brush(ItemUsable):
     #Método de criação
     def __init__(self, name, price, valueRecovery):

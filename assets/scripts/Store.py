@@ -14,7 +14,6 @@ class Store:
             for i in self._itens:
                 if i.name == item:
                     purchaseValue += i.price * qtd
-
         return purchaseValue
 
     #Método que aprova compra baseada no valor da compra e saldo do jogador.
