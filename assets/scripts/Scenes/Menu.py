@@ -13,13 +13,16 @@ class Hall():
         background = pygame.image.load("../../images/background_big.png").convert_alpha()
         background = pygame.transform.scale(background, (screen_width, screen_height))
 
+
         self.bubble = pygame.image.load("../../images/icon_bubble.png").convert_alpha()
         self.bubble = pygame.transform.scale(self.bubble, (self.bubble.get_width()/10, self.bubble.get_height()/10))
         self.images_list[self.bubble] = (20,55)
 
         self.font_ballon = pygame.font.SysFont("Arial", 18)
-        self.text_ballon = self.font_ballon.render("Tap on the Box", False, (0,0,0))
-        self.images_list[self.text_ballon] = (40,110)
+        self.text_ballon = self.font_ballon.render("Welcome", False, (0,0,0))
+        self.text_ballon2 = self.font_ballon.render("tap to continue!", False, (0,0,0))
+        self.images_list[self.text_ballon] = (70,90)
+        self.images_list[self.text_ballon2] = (50,110)
 
         self.detective = pygame.image.load("../../images/animal_tutorial_cat.png").convert_alpha()
         self.detective = pygame.transform.scale(self.detective, (self.detective.get_width()/3, self.detective.get_height()/3))
@@ -31,6 +34,8 @@ class Hall():
         self.boxOpened = pygame.image.load("../../images/box_opened.png").convert_alpha()
         self.boxOpened = pygame.transform.scale(self.boxOpened, (self.boxOpened.get_width()/5, self.boxOpened.get_height()/5))
 
+        self.firstText = True
+        self.finishDialog = False
         self.flagAnimDetective = True
         self.opened = False
 
@@ -39,7 +44,8 @@ class Hall():
 
             self.animateDetective()
 
-            self.openBox()
+            if self.finishDialog:
+                self.openBox()
 
             blit_images(screen, self.images_list)
 
@@ -49,21 +55,33 @@ class Hall():
         quit()
 
     def animateDetective(self):
-        try:
-            if self.images_list[self.detective][0] > 100 and self.flagAnimDetective:
-                self.images_list[self.detective] = \
-                (self.images_list[self.detective][0] - 8, 640 - self.detective.get_size()[1])
-            elif self.images_list[self.detective][0] < 290:
-                if self.flagAnimDetective:
-                    pygame.time.wait(3000)
-                self.images_list[self.detective] = \
-                (self.images_list[self.detective][0] + 8, 640 - self.detective.get_size()[1])
-                self.flagAnimDetective = False
-            else:
-                del self.images_list[self.detective], self.images_list[self.text_ballon], self.images_list[self.bubble]
-        except KeyError:
-            if not self.opened:
-                self.images_list[self.boxClosed] = (78, 300)
+            try:
+                print self.images_list[self.detective][0]
+                if self.images_list[self.detective][0] > 100 and self.flagAnimDetective:
+                    self.images_list[self.detective] = \
+                    (self.images_list[self.detective][0] - 8, 640 - self.detective.get_size()[1])
+                elif self.images_list[self.detective][0] < 290:
+                    for event in pygame.event.get():
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            if not self.firstText:
+                                self.finishDialog = True
+                            else:
+                                del self.images_list[self.text_ballon], self.images_list[self.text_ballon2]
+                                self.text_ballon = self.font_ballon.render("Open the box!", False, (0,0,0))
+                                self.images_list[self.text_ballon] = (50,110)
+                                self.firstText = False
+                        if event.type == pygame.QUIT:
+                            self.crashed = True
+                    if self.finishDialog:
+                        self.images_list[self.detective] = \
+                        (self.images_list[self.detective][0] + 8, 640 - self.detective.get_size()[1])
+                        self.flagAnimDetective = False
+                else:
+                    del self.images_list[self.detective], \
+                    self.images_list[self.text_ballon], self.images_list[self.bubble]
+            except KeyError:
+                if not self.opened:
+                    self.images_list[self.boxClosed] = (78, 300)
 
     def openBox(self):
         for event in pygame.event.get():
@@ -82,7 +100,7 @@ class Hall():
                         self.opened = True
                         self.randomCreature()
             except KeyError:
-                print mouse_pos
+                pass
 
             if event.type == pygame.QUIT:
                     self.crashed = True
@@ -99,8 +117,6 @@ class Hall():
         creatureImage = self.player.creatures.sprites
         creatureImage = pygame.transform.scale(creatureImage, (creatureImage.get_width()/7, creatureImage.get_height()/7))
 
-
-        #self.images_list[self.background] = (0,0)
         self.images_list[creatureImage] = (70,270)
 
         sorted_x = sorted(self.images_list, key=self.images_list.get, reverse=True)
