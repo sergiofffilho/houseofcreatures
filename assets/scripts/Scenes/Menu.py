@@ -80,7 +80,6 @@ class Hall():
                         self.images_list[self.boxOpened] = (5, 275)
 
                         self.opened = True
-                        self.text_ballon = self.font_ballon.render("", False, (0,0,0))
                         self.randomCreature()
             except KeyError:
                 print mouse_pos
