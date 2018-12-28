@@ -3,16 +3,15 @@ from utils import blit_images
 
 class Hall():
     def __init__(self):
-        self.images_list = {}
-
-        background = pygame.image.load("../../images/background_big.png").convert_alpha()
-        background = pygame.transform.scale(background, (screen_width, screen_height))
-        self.images_list[background] = (0,0)
+        self.images_list = {}        
 
         self.clock = pygame.time.Clock() # Tempo de jogo
 
     def oppening(self):
         self.crashed = False
+
+        background = pygame.image.load("../../images/background_big.png").convert_alpha()
+        background = pygame.transform.scale(background, (screen_width, screen_height))
 
         self.bubble = pygame.image.load("../../images/icon_bubble.png").convert_alpha()
         self.bubble = pygame.transform.scale(self.bubble, (self.bubble.get_width()/10, self.bubble.get_height()/10))
@@ -36,11 +35,14 @@ class Hall():
         self.opened = False
 
         while not self.crashed:
+            screen.blit(background,(0,0))
+
             self.animateDetective()
 
             self.openBox()
 
             blit_images(screen, self.images_list)
+
             pygame.display.flip() # Mostra frame
             self.clock.tick(60) # fps
         pygame.quit()
@@ -51,14 +53,15 @@ class Hall():
             if self.images_list[self.detective][0] > 100 and self.flagAnimDetective:
                 self.images_list[self.detective] = \
                 (self.images_list[self.detective][0] - 8, 640 - self.detective.get_size()[1])
-            elif self.images_list[self.detective][0] < 360:
+            elif self.images_list[self.detective][0] < 290:
                 if self.flagAnimDetective:
                     pygame.time.wait(2000)
                 self.images_list[self.detective] = \
                 (self.images_list[self.detective][0] + 8, 640 - self.detective.get_size()[1])
                 self.flagAnimDetective = False
+                del self.images_list[self.bubble]
             else:
-                del self.images_list[self.bubble], self.images_list[self.detective]
+                del self.images_list[self.detective]
         except KeyError:
             if not self.opened:
                 self.images_list[self.boxClosed] = (78, 300)
@@ -73,6 +76,7 @@ class Hall():
                  mouse_pos[1] <= self.images_list[self.boxClosed][1]+self.boxClosed.get_height():
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         del self.images_list[self.boxClosed]
+                        pygame.mixer.Sound.play(openBox_sound)
                         self.images_list[self.boxOpened] = (5, 275)
                         self.opened = True
             except KeyError:
@@ -100,11 +104,12 @@ class Menu():
         self.images_list = {}
 
         screen.fill((251, 201, 236))
+        pygame.mixer.music.load ("../../sounds/Ap1.wav")
+        pygame.mixer.music.play(-1)
 
         logo = pygame.image.load("../../images/HOC_logo.png").convert_alpha()
         logo = pygame.transform.scale(logo, (200,200))
         self.images_list[logo] = (80, 120)
-
         self.button_login = pygame.image.load("../../images/button_login.png").convert_alpha()
         self.button_login = pygame.transform.scale(self.button_login, (200,80))
         self.images_list[self.button_login] = (80,380)
@@ -127,6 +132,7 @@ class Menu():
                  mouse_pos[1] <= self.images_list[self.button_login][1]+80:
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
+                        pygame.mixer.Sound.play(play_sound)
                         hall = Hall()
                         hall.oppening()
 
@@ -143,6 +149,10 @@ if __name__ == '__main__':
     pygame.init()
 
     pygame.display.init()
+    pygame.mixer.init()
+    play_sound = pygame.mixer.Sound("../../sounds/play.wav")
+    openBox_sound = pygame.mixer.Sound("../../sounds/caixa_abre.wav")
+
 
     screen = pygame.display.set_mode([360, 640])
     screen_width = screen.get_width()
