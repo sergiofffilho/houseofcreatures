@@ -3,6 +3,7 @@ from utils import blit_images
 
 class Hall():
     def __init__(self):
+
         self.images_list = {}        
 
         self.clock = pygame.time.Clock() # Tempo de jogo
