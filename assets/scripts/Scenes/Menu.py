@@ -4,16 +4,14 @@ from utils import blit_images
 class Hall():
     def __init__(self):
         self.images_list = {}
-
         self.background = pygame.image.load("../../images/background_big.png").convert_alpha()
-        self.background = pygame.transform.scale(self.background, (screen_width, screen_height))
+        self. background = pygame.transform.scale(self.background, (screen_width, screen_height))
         self.images_list[self.background] = (0,0)
 
         self.clock = pygame.time.Clock() # Tempo de jogo
-
+        self.background = pygame.image.load("../../images/background_big.png").convert_alpha()
     def oppening(self):
         self.crashed = False
-
         self.bubble = pygame.image.load("../../images/icon_bubble.png").convert_alpha()
         self.bubble = pygame.transform.scale(self.bubble, (self.bubble.get_width()/10, self.bubble.get_height()/10))
         self.images_list[self.bubble] = (20,55)
@@ -53,7 +51,7 @@ class Hall():
                 (self.images_list[self.detective][0] - 8, 640 - self.detective.get_size()[1])
             elif self.images_list[self.detective][0] < 360:
                 if self.flagAnimDetective:
-                    pygame.time.wait(2000)
+                    pygame.time.wait(4000)
                 self.images_list[self.detective] = \
                 (self.images_list[self.detective][0] + 8, 640 - self.detective.get_size()[1])
                 self.flagAnimDetective = False
