@@ -3,7 +3,7 @@ from utils import blit_images
 
 class Hall():
     def __init__(self):
-        self.images_list = {}        
+        self.images_list = {}
 
         self.clock = pygame.time.Clock() # Tempo de jogo
 
@@ -16,7 +16,7 @@ class Hall():
         self.bubble = pygame.image.load("../../images/icon_bubble.png").convert_alpha()
         self.bubble = pygame.transform.scale(self.bubble, (self.bubble.get_width()/10, self.bubble.get_height()/10))
         self.images_list[self.bubble] = (20,55)
-        
+
         self.font_ballon = pygame.font.SysFont("Arial", 18)
         self.text_ballon = self.font_ballon.render("Tap on the Box", False, (0,0,0))
         self.images_list[self.text_ballon] = (40,110)
@@ -59,9 +59,8 @@ class Hall():
                 self.images_list[self.detective] = \
                 (self.images_list[self.detective][0] + 8, 640 - self.detective.get_size()[1])
                 self.flagAnimDetective = False
-                del self.images_list[self.bubble]
             else:
-                del self.images_list[self.detective]
+                del self.images_list[self.detective], self.images_list[self.text_ballon], self.images_list[self.bubble]
         except KeyError:
             if not self.opened:
                 self.images_list[self.boxClosed] = (78, 300)
