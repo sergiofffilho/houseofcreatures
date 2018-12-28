@@ -5,9 +5,9 @@ class Hall():
     def __init__(self):
         self.images_list = {}
 
-        background = pygame.image.load("../../images/background_big.png").convert_alpha()
-        background = pygame.transform.scale(background, (screen_width, screen_height))
-        self.images_list[background] = (0,0)
+        self.background = pygame.image.load("../../images/background_big.png").convert_alpha()
+        self.background = pygame.transform.scale(self.background, (screen_width, screen_height))
+        self.images_list[self.background] = (0,0)
 
         self.clock = pygame.time.Clock() # Tempo de jogo
 
