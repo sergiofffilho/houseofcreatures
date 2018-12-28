@@ -1,11 +1,11 @@
-import pygame
+import pygame, random
 
-from Player import Player
-from Creature import Creature
-from ItemUsable import Food, Brush
-from ItemEquipment import Decoration
-from Inventory import Inventory
-from Store import Store
+from scripts.Objects.Player import Player
+from scripts.Objects.Creature import Creature
+from scripts.Objects.ItemUsable import Food, Brush
+from scripts.Objects.ItemEquipment import Decoration
+from scripts.Objects.Inventory import Inventory
+from scripts.Objects.Store import Store
 
 def initiateItens():
     itensList = []
@@ -25,14 +25,19 @@ def initiateItens():
     return itensList
 
 def setup():
-    croc_image = pygame.image.load("../images/animal_croc.png")
-    croc = Creature("croc", croc_image)
-    player = Player(0, croc)
+    creatures = ["croc", "doggy", "kitty", "seal"]
+
+    randomInt = random.randint(0,3)
+
+    creatureImage = pygame.image.load("../../images/animal_"+creatures[randomInt]+".png").convert_alpha()
+    randomCreature = Creature(creatures[randomInt], creatureImage)
+    player = Player(0, randomCreature)
     inventory = Inventory()
 
     #Itens para a store
     itensStore = initiateItens()
     store = Store(itensStore)
 
-if __name__ == '__main__':
-    setup()
+    return player, inventory, store
+
+

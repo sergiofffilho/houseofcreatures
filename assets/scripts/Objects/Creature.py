@@ -35,6 +35,13 @@ class Creature:
         self._name = value
 
     @property
+    def sprites(self):
+        return self._sprites
+    @sprites.setter
+    def sprites(self, value):
+        self._sprites = value
+
+    @property
     def hapness(self):
         return self._hapness
     @hapness.setter

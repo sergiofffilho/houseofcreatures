@@ -1,10 +1,10 @@
 import pygame
+from setup import setup
 from utils import blit_images
 
 class Hall():
     def __init__(self):
         self.images_list = {}
-
         self.clock = pygame.time.Clock() # Tempo de jogo
 
     def oppening(self):
@@ -68,6 +68,7 @@ class Hall():
     def openBox(self):
         for event in pygame.event.get():
             mouse_pos = pygame.mouse.get_pos()
+
             try:
                 if mouse_pos[0] >= self.images_list[self.boxClosed][0] and \
                  mouse_pos[1] >= self.images_list[self.boxClosed][1] and \
@@ -77,13 +78,39 @@ class Hall():
                         del self.images_list[self.boxClosed]
                         pygame.mixer.Sound.play(openBox_sound)
                         self.images_list[self.boxOpened] = (5, 275)
+
                         self.opened = True
                         self.text_ballon = self.font_ballon.render("", False, (0,0,0))
+                        self.randomCreature()
             except KeyError:
-                pass
+                print mouse_pos
 
             if event.type == pygame.QUIT:
-                self.crashed = True
+                    self.crashed = True
+
+
+    def randomCreature(self):
+        self.player, self.inventory, self.store = setup()
+        blit_images(screen, self.images_list)
+        pygame.display.flip() # Mostra frame
+        pygame.time.wait(2000)
+
+        del self.images_list[self.boxOpened]
+
+        creatureImage = self.player.creatures.sprites
+        creatureImage = pygame.transform.scale(creatureImage, (creatureImage.get_width()/7, creatureImage.get_height()/7))
+
+
+        #self.images_list[self.background] = (0,0)
+        self.images_list[creatureImage] = (70,270)
+
+        sorted_x = sorted(self.images_list, key=self.images_list.get, reverse=True)
+
+        print sorted_x
+
+
+
+
 
     def loop(self):
         crashed = False
