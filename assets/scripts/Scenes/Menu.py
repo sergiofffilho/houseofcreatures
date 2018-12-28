@@ -16,10 +16,10 @@ class Hall():
         self.bubble = pygame.image.load("../../images/icon_bubble.png").convert_alpha()
         self.bubble = pygame.transform.scale(self.bubble, (self.bubble.get_width()/10, self.bubble.get_height()/10))
         self.images_list[self.bubble] = (20,55)
-
-##        font_ballon = pygame.font.SysFont("Arial", 18)
-##        text_ballon = font_ballon.render("Tap on the Box", False, (0,0,0))
-##        self.images_list[text_ballon] = (40,110)
+        
+        self.font_ballon = pygame.font.SysFont("Arial", 18)
+        self.text_ballon = self.font_ballon.render("Tap on the Box", False, (0,0,0))
+        self.images_list[self.text_ballon] = (40,110)
 
         self.detective = pygame.image.load("../../images/animal_tutorial_cat.png").convert_alpha()
         self.detective = pygame.transform.scale(self.detective, (self.detective.get_width()/3, self.detective.get_height()/3))
@@ -55,7 +55,7 @@ class Hall():
                 (self.images_list[self.detective][0] - 8, 640 - self.detective.get_size()[1])
             elif self.images_list[self.detective][0] < 290:
                 if self.flagAnimDetective:
-                    pygame.time.wait(2000)
+                    pygame.time.wait(3000)
                 self.images_list[self.detective] = \
                 (self.images_list[self.detective][0] + 8, 640 - self.detective.get_size()[1])
                 self.flagAnimDetective = False
@@ -79,6 +79,7 @@ class Hall():
                         pygame.mixer.Sound.play(openBox_sound)
                         self.images_list[self.boxOpened] = (5, 275)
                         self.opened = True
+                        self.text_ballon = self.font_ballon.render("", False, (0,0,0))
             except KeyError:
                 pass
 
