@@ -1,11 +1,12 @@
-import pygame, random
+import pygame, random, sys
+sys.path.append('../Objects')
 
-from scripts.Objects.Player import Player
-from scripts.Objects.Creature import Creature
-from scripts.Objects.ItemUsable import Food, Brush
-from scripts.Objects.ItemEquipment import Decoration
-from scripts.Objects.Inventory import Inventory
-from scripts.Objects.Store import Store
+from Player import Player
+from Creature import Creature
+from ItemUsable import Food, Brush
+from ItemEquipment import Decoration
+from Inventory import Inventory
+from Store import Store
 
 def initiateItens():
     itensList = []
