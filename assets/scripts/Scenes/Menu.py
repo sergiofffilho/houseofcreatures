@@ -1,6 +1,7 @@
 import pygame
 from setup import setup
 from utils import blit_images
+from HUD import HUD
 
 class Hall():
     def __init__(self):
@@ -10,8 +11,8 @@ class Hall():
     def oppening(self):
         self.crashed = False
 
-        background = pygame.image.load("../../images/background_big.png").convert_alpha()
-        background = pygame.transform.scale(background, (screen_width, screen_height))
+        self.background = pygame.image.load("../../images/background_big.png").convert_alpha()
+        self.background = pygame.transform.scale(self.background, (screen_width, screen_height))
 
 
         self.bubble = pygame.image.load("../../images/icon_bubble.png").convert_alpha()
@@ -40,7 +41,7 @@ class Hall():
         self.opened = False
 
         while not self.crashed:
-            screen.blit(background,(0,0))
+            screen.blit(self.background,(0,0))
 
             self.animateDetective()
 
@@ -56,7 +57,6 @@ class Hall():
 
     def animateDetective(self):
             try:
-                print self.images_list[self.detective][0]
                 if self.images_list[self.detective][0] > 100 and self.flagAnimDetective:
                     self.images_list[self.detective] = \
                     (self.images_list[self.detective][0] - 8, 640 - self.detective.get_size()[1])
@@ -105,7 +105,6 @@ class Hall():
             if event.type == pygame.QUIT:
                     self.crashed = True
 
-
     def randomCreature(self):
         self.player, self.inventory, self.store = setup()
         blit_images(screen, self.images_list)
@@ -114,23 +113,43 @@ class Hall():
 
         del self.images_list[self.boxOpened]
 
-        creatureImage = self.player.creatures.sprites
-        creatureImage = pygame.transform.scale(creatureImage, (creatureImage.get_width()/7, creatureImage.get_height()/7))
+        self.creatureImage = self.player.creatures.sprites
+        self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/7, self.creatureImage.get_height()/7))
 
-        self.images_list[creatureImage] = (70,270)
+        self.images_list[self.creatureImage] = (70,270)
 
-        sorted_x = sorted(self.images_list, key=self.images_list.get, reverse=True)
-
-        print sorted_x
-
-
-
-
+        self.loop()
 
     def loop(self):
         crashed = False
+        self.button_choice = pygame.image.load("../../images/button_login.png").convert_alpha()
+        self.button_choice = pygame.transform.scale(self.button_choice, \
+            (self.button_choice.get_width()/2, self.button_choice.get_height()/5))
+        self.images_list[self.button_choice] = (12,42)
+
+
+        self.font_choice = pygame.font.SysFont("Arial", 50)
+        self.text_choice = self.font_choice.render("TAP ONE", False, (0,0,0))
+        self.images_list[self.text_choice] = (80,55)
+
+
         while not crashed:
+            screen.blit(self.background,(0,0))
+
             for event in pygame.event.get():
+                mouse_pos = pygame.mouse.get_pos()
+
+                try:
+                    if mouse_pos[0] >= self.images_list[self.creatureImage][0] and \
+                     mouse_pos[1] >= self.images_list[self.creatureImage][1] and \
+                     mouse_pos[0] <= self.images_list[self.creatureImage][0]+self.creatureImage.get_width() and \
+                     mouse_pos[1] <= self.images_list[self.creatureImage][1]+self.creatureImage.get_height():
+                        if event.type == pygame.MOUSEBUTTONDOWN:
+                            h = HUD(self.player, screen)
+                            h.loop()
+                except KeyError:
+                    pass
+
                 if event.type == pygame.QUIT:
                     crashed = True
 

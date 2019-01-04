@@ -1,4 +1,5 @@
 # coding=utf-8
+import time
 
 class Creature:
     __count_creatures = 0
@@ -17,14 +18,28 @@ class Creature:
         pass
 
     #Métodos para decrementar com o tempo os atributos hapness, hungry, hygiene
-    def autoDecreaseHapness(self):
-        pass
+    def autoDecreaseHapness(self, time_start):
+        if time.time() - time_start > 0.2:
+            self._hapness -= 1
+            if self._hapness < 0:
+                self._hapness = 0
+        return self._hapness
 
-    def autoDecreaseHungry(self):
-        pass
 
-    def autoDecreaseHygiene(self):
-        pass
+
+    def autoDecreaseHungry(self, time_start):
+        if time.time() - time_start > 0.2:
+            self._hungry -= 1
+            if self._hungry < 0:
+                self._hungry = 0
+        return self._hungry
+
+    def autoDecreaseHygiene(self, time_start):
+        if time.time() - time_start > 0.2:
+            self._hygiene -= 1
+            if self._hygiene < 0:
+                self._hygiene = 0
+        return self._hygiene
 
     #Métodos getter e setters
     @property
