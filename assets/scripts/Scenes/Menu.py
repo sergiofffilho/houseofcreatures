@@ -212,7 +212,7 @@ if __name__ == '__main__':
     pygame.display.init()
     pygame.mixer.init()
     play_sound = pygame.mixer.Sound("../../sounds/play.wav")
-    openBox_sound = pygame.mixer.Sound("../../sounds/caixa_abre.wav")
+    openBox_sound = pygame.mixer.Sound("../../sounds/animal_aparece.wav")
 
 
     screen = pygame.display.set_mode([360, 640])
