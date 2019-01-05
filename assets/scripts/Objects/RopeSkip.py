@@ -1,12 +1,12 @@
 # coding=utf-8
 
 import pygame
-from Minigame  import Minigame
+from Minigame import Minigame
 
 class RopeSkip(Minigame):
-    def __init__(self, player, screen, hapnessGain, hungryCost, hygieneCost, score,\
+    def __init__(self, HUD, player, screen, hapnessGain, hungryCost, hygieneCost, score,\
      difficultMultuplier, jumpCounter = 0, ropeVelocity = 1.0):
-        Minigame.__init__(self, player, screen, hapnessGain, hungryCost, hygieneCost, score, difficultMultuplier)
+        Minigame.__init__(self, HUD, player, screen, hapnessGain, hungryCost, hygieneCost, score, difficultMultuplier)
         self._jumpCounter = jumpCounter
         self._ropeVelocity = ropeVelocity
 
@@ -23,7 +23,9 @@ class RopeSkip(Minigame):
             for event in pygame.event.get():
                 mouse_pos = pygame.mouse.get_pos()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    print "clique"
+                    self.HUD.__init__(self.player, self.screen)
+                    self.HUD.loop()
+
                 if event.type == pygame.QUIT:
                     crashed = True
 
@@ -34,7 +36,7 @@ class RopeSkip(Minigame):
         quit()
 
     def loadImages(self):
-        self.background = pygame.image.load("../../images/background_snow_minigame.png").convert_alpha()
+        self.background = pygame.image.load("../../images/background_corda.png").convert_alpha()
         self.background = pygame.transform.scale(self.background, (self.screen.get_width(), self.screen.get_height()))
 
     #Métodos getters e setters

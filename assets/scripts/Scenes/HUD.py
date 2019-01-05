@@ -113,7 +113,7 @@ class HUD():
         self.btnAchievements = pygame.image.load("../../images/UI_Houseofcreatures/"+\
             "Buttons/Achievements.png").convert_alpha()
         self.btnAchievements = pygame.transform.scale(self.btnAchievements, (self.btnAchievements.get_width(), self.btnAchievements.get_height()))
-        self.images_list[self.btnAchievements] = (-25, 150)
+        self.images_list[self.btnAchievements] = (-20, 150)
 
         self.btnGrooming = pygame.image.load("../../images/UI_Houseofcreatures/"+\
             "Buttons/Grooming.png").convert_alpha()
@@ -228,7 +228,7 @@ class HUD():
             self.images_list[self.btnStore] = (-20, 360)
             self.images_list[self.btnHome] = (-20, 430)
             self.images_list[self.btnOptions] = (-20, 500)
-            initiateRoadSkip(self.player, self.screen)
+            initiateRoadSkip(self, self.player, self.screen)
 
         elif mouse_pos[0] >= self.images_list[self.btnGrooming][0] and \
             mouse_pos[1] >= self.images_list[self.btnGrooming][1] and \
