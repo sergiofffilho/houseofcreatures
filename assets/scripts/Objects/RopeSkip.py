@@ -20,7 +20,15 @@ class RopeSkip(Minigame):
 
         self.loadImages()
 
+        cycleTime = 0
+        interval = .15
+        frameRope = 0
+
         while not crashed:
+            milliseconds = self.clock.tick(60) # fps
+            seconds = milliseconds/1000.0
+            cycleTime += seconds
+
             for event in pygame.event.get():
                 mouse_pos = pygame.mouse.get_pos()
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -30,10 +38,20 @@ class RopeSkip(Minigame):
                     crashed = True
 
             self.screen.blit(self.background,(0,0))
+
+            if cycleTime > interval:
+
+                frameRope += 1
+                if frameRope >= len(self.ropeGroup):
+                    frameRope = 0
+
+                cycleTime = 0
+
+            self.screen.blit(self.ropeGroup[frameRope],(20,400))
+
             blit_images(self.screen, self.images_list)
 
             pygame.display.update() # Mostra frame
-            self.clock.tick(60) # fps
         pygame.quit()
         quit()
 
@@ -44,6 +62,31 @@ class RopeSkip(Minigame):
         self.creatureImage = self.player.creatures.sprites
         self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/10, self.creatureImage.get_height()/10))
         self.images_list[self.creatureImage] = (120,320)
+
+        self.ropeGroup = []
+
+        ropeOne = pygame.image.load("../../images/icon_corda.png").convert_alpha()
+        ropeOne = pygame.transform.scale(ropeOne, (ropeOne.get_width()/6, ropeOne.get_height()/6))
+        self.ropeGroup.append(ropeOne)
+
+        ropeTwo = pygame.image.load("../../images/icon_corda_2.png").convert_alpha()
+        ropeTwo = pygame.transform.scale(ropeTwo, (ropeTwo.get_width()/6, ropeTwo.get_height()/6))
+        self.ropeGroup.append(ropeTwo)
+
+        ropeThree = pygame.image.load("../../images/icon_corda_3.png").convert_alpha()
+        ropeThree = pygame.transform.scale(ropeThree, (ropeThree.get_width()/6, ropeThree.get_height()/6))
+        self.ropeGroup.append(ropeThree)
+
+
+        self.ropeGroup.append(pygame.transform.flip(ropeThree, False, True))
+        self.ropeGroup.append(pygame.transform.flip(ropeTwo, False, True))
+        self.ropeGroup.append(pygame.transform.flip(ropeOne, False, True))
+        self.ropeGroup.append(pygame.transform.flip(ropeTwo, False, True))
+        self.ropeGroup.append(pygame.transform.flip(ropeThree, False, True))
+        self.ropeGroup.append(ropeThree)
+        self.ropeGroup.append(ropeTwo)
+
+
 
     def jump(self):
 ##        pygame.display.update() # Mostra frame
