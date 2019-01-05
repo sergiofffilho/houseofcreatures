@@ -142,12 +142,12 @@ class HUD():
         #Imagens para coins
         self.coinsImage = pygame.image.load("../../images/UI_Houseofcreatures/"+\
             "Buttons/PawCoin.png").convert_alpha()
-        self.coinsImage = pygame.transform.scale(self.coinsImage, (self.coinsImage.get_width()/40, self.coinsImage.get_height()/40))
-        self.images_list[self.coinsImage] = (250, 550)
+        self.coinsImage = pygame.transform.scale(self.coinsImage, (self.coinsImage.get_width()/43, self.coinsImage.get_height()/43))
+        self.images_list[self.coinsImage] = (230, 550)
 
-        self.font_coins = pygame.font.Font("../../fonts/PORKYS_.ttf", 45)
+        self.font_coins = pygame.font.Font("../../fonts/PORKYS_.ttf", 42)
         self.text_coins = self.font_coins.render(str(self.player.coins), False, (255,255,255))
-        self.images_list[self.text_coins] = (305,545)
+        self.images_list[self.text_coins] = (280,545)
 
     def mountHUD(self):
         new_key_hap = self.checkHapness()
