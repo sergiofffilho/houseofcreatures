@@ -1,4 +1,4 @@
-import pygame
+import pygame, time
 from setup import setup
 from utils import blit_images
 from HUD import HUD
@@ -172,9 +172,9 @@ class Menu():
         pygame.mixer.music.load ("../../sounds/Ap1.wav")
         pygame.mixer.music.play(-1)
         self.button_login = pygame.image.load("../../images/playBT.png").convert_alpha()
-        print (self.button_login.get_width)
+
         self.button_login = pygame.transform.scale(self.button_login, (130,70))
-        
+
         self.images_list[self.button_login] = (screen_width/2 -65,400)
 
         font_login = pygame.font.SysFont("Arial", 30)
@@ -208,6 +208,29 @@ class Menu():
         pygame.quit()
         quit()
 
+def runSplash():
+    crashed = False
+    clock = pygame.time.Clock() # Tempo de jogo
+
+    time_s = time.time()
+
+    while not crashed:
+
+        splashImage = pygame.image.load("../../images/StudioSplash.png")
+        splashImage = pygame.transform.scale(splashImage, (screen_width, screen_height))
+        splashImage.set_alpha(80)
+
+        screen.blit(splashImage,(0,0))
+        pygame.display.update()
+        clock.tick(40) # fps
+
+        if time.time() - time_s > 2:
+            crashed = True
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                    crashed = True
+
 if __name__ == '__main__':
     pygame.init()
 
@@ -223,6 +246,8 @@ if __name__ == '__main__':
     screen_height = screen.get_height()
 
     pygame.display.set_caption("House of Creatures")
+
+    runSplash()
 
     menu = Menu()
     menu.loop()

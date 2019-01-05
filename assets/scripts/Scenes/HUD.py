@@ -238,6 +238,7 @@ class HUD():
             self.images_list[self.btnStore] = (-20, 360)
             self.images_list[self.btnHome] = (-20, 430)
             self.images_list[self.btnOptions] = (-20, 500)
+
         elif mouse_pos[0] >= self.images_list[self.btnIventory][0] and \
             mouse_pos[1] >= self.images_list[self.btnIventory][1] and \
             mouse_pos[0] <= self.images_list[self.btnIventory][0]+self.btnIventory.get_width() and \
@@ -248,6 +249,7 @@ class HUD():
             self.images_list[self.btnStore] = (-20, 360)
             self.images_list[self.btnHome] = (-20, 430)
             self.images_list[self.btnOptions] = (-20, 500)
+
         elif mouse_pos[0] >= self.images_list[self.btnStore][0] and \
             mouse_pos[1] >= self.images_list[self.btnStore][1] and \
             mouse_pos[0] <= self.images_list[self.btnStore][0]+self.btnStore.get_width() and \
@@ -258,6 +260,7 @@ class HUD():
             self.images_list[self.btnStore] = (0, 360)
             self.images_list[self.btnHome] = (-20, 430)
             self.images_list[self.btnOptions] = (-20, 500)
+
         elif mouse_pos[0] >= self.images_list[self.btnHome][0] and \
             mouse_pos[1] >= self.images_list[self.btnHome][1] and \
             mouse_pos[0] <= self.images_list[self.btnHome][0]+self.btnHome.get_width() and \
@@ -268,6 +271,7 @@ class HUD():
             self.images_list[self.btnStore] = (-20, 360)
             self.images_list[self.btnHome] = (0, 430)
             self.images_list[self.btnOptions] = (-20, 500)
+
         elif mouse_pos[0] >= self.images_list[self.btnOptions][0] and \
             mouse_pos[1] >= self.images_list[self.btnOptions][1] and \
             mouse_pos[0] <= self.images_list[self.btnOptions][0]+self.btnOptions.get_width() and \
