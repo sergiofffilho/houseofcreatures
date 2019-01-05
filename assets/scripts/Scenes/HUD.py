@@ -48,7 +48,7 @@ class HUD():
 
         self.creatureImage = self.player.creatures.sprites
         self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/7, self.creatureImage.get_height()/7))
-        self.images_list[self.creatureImage] = (90,270)
+        self.images_list[self.creatureImage] = (100,270)
 
         #Imagens barra hapness
         self.barHapEmpty = pygame.image.load("../../images/UI_Houseofcreatures/"+\
@@ -138,6 +138,16 @@ class HUD():
             "Buttons/Options.png").convert_alpha()
         self.btnOptions = pygame.transform.scale(self.btnOptions, (self.btnOptions.get_width(), self.btnOptions.get_height()))
         self.images_list[self.btnOptions] = (-20, 500)
+
+        #Imagens para coins
+        self.coinsImage = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/PawCoin.png").convert_alpha()
+        self.coinsImage = pygame.transform.scale(self.coinsImage, (self.coinsImage.get_width()/40, self.coinsImage.get_height()/40))
+        self.images_list[self.coinsImage] = (250, 550)
+
+        self.font_coins = pygame.font.Font("../../fonts/PORKYS_.ttf", 45)
+        self.text_coins = self.font_coins.render(str(self.player.coins), False, (255,255,255))
+        self.images_list[self.text_coins] = (305,545)
 
     def mountHUD(self):
         new_key_hap = self.checkHapness()

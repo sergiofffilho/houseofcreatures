@@ -116,9 +116,9 @@ class Hall():
         del self.images_list[self.boxOpened]
 
         self.creatureImage = self.player.creatures.sprites
-        self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/7, self.creatureImage.get_height()/7))
+        self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/10, self.creatureImage.get_height()/10))
 
-        self.images_list[self.creatureImage] = (90,270)
+        self.images_list[self.creatureImage] = (120,300)
 
         self.loop()
 
@@ -129,7 +129,7 @@ class Hall():
            # (self.button_choice.get_width()/2, self.button_choice.get_height()/5))
         #self.images_list[self.button_choice] = (20,42)
 
-        self.font_choice = pygame.font.Font("../../fonts/PORKYS_.ttf", 50) 
+        self.font_choice = pygame.font.Font("../../fonts/PORKYS_.ttf", 50)
         self.text_choice = self.font_choice.render("Pick One!", False, (0,0,0))
         self.images_list[self.text_choice] = (80,55)
 
