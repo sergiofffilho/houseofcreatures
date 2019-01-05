@@ -48,7 +48,7 @@ class HUD():
 
         self.creatureImage = self.player.creatures.sprites
         self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/7, self.creatureImage.get_height()/7))
-        self.images_list[self.creatureImage] = (100,270)
+        self.images_list[self.creatureImage] = (120,270)
 
         #Imagens barra hapness
         self.barHapEmpty = pygame.image.load("../../images/UI_Houseofcreatures/"+\
