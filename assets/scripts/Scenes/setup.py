@@ -7,6 +7,7 @@ from ItemUsable import Food, Brush
 from ItemEquipment import Decoration
 from Inventory import Inventory
 from Store import Store
+from RopeSkip import RopeSkip
 
 def initiateItens():
     itensList = []
@@ -40,5 +41,16 @@ def setup():
     store = Store(itensStore)
 
     return player, inventory, store
+
+def initiateRoadSkip(player, screen):
+    hapGain, hunCost, higCost = 10, 10, 10
+    score = 500
+    difficult = 1
+
+    rS = RopeSkip(player, screen, hapGain, hunCost, higCost, score, difficult)
+##    print rS.player, rS.screen, rS.hapnessGain, rS.hungryCost, rS.hygieneCost, rS.score, rS.difficultMultiplier
+##    rS.scoreToCoins()
+    rS.update()
+
 
 

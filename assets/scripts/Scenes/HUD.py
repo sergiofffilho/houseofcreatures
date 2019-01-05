@@ -3,6 +3,7 @@
 
 import pygame, time
 from utils import blit_images
+from setup import initiateRoadSkip
 
 class HUD():
     def __init__(self, player, screen):
@@ -227,6 +228,7 @@ class HUD():
             self.images_list[self.btnStore] = (-20, 360)
             self.images_list[self.btnHome] = (-20, 430)
             self.images_list[self.btnOptions] = (-20, 500)
+            initiateRoadSkip(self.player, self.screen)
 
         elif mouse_pos[0] >= self.images_list[self.btnGrooming][0] and \
             mouse_pos[1] >= self.images_list[self.btnGrooming][1] and \

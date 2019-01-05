@@ -164,14 +164,15 @@ class Hall():
 class Menu():
     def __init__(self):
         self.images_list = {}
-        self.button_login = pygame.image.load("../../images/playBT.png").convert_alpha()
-        self.button_login = pygame.transform.scale(self.button_login, (130,70))
-        self.images_list[self.button_login] = (screen_width/2 -65,400)
+
 
         self.backgroundsplash = pygame.image.load("../../images/backgroundSplash.png").convert_alpha()
         self.backgroundsplash = pygame.transform.scale(self.backgroundsplash, (screen_width, screen_height))
         self.images_list[self.backgroundsplash] = (0,0)
 
+        self.button_login = pygame.image.load("../../images/playBT.png").convert_alpha()
+        self.button_login = pygame.transform.scale(self.button_login, (130,70))
+        self.images_list[self.button_login] = (screen_width/2 -65,400)
 
         pygame.mixer.music.load ("../../sounds/Ap1.wav")
         pygame.mixer.music.play(-1)
@@ -217,14 +218,9 @@ def runSplash():
     splashImage = pygame.transform.scale(splashImage, (screen_width, screen_height))
 
     time_s = time.time()
+    splashImage.set_alpha(5)
 
     while not crashed:
-        splashImage.set_alpha(5)
-
-        screen.blit(splashImage,(0,0))
-        pygame.display.update()
-        clock.tick(60) # fps
-
         if time.time() - time_s > 3:
             crashed = True
 
@@ -232,6 +228,10 @@ def runSplash():
             if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
+
+        screen.blit(splashImage,(0,0))
+        pygame.display.update()
+        clock.tick(60) # fps
 
 if __name__ == '__main__':
     pygame.init()
@@ -241,7 +241,6 @@ if __name__ == '__main__':
     play_sound = pygame.mixer.Sound("../../sounds/play.wav")
     openBox_sound = pygame.mixer.Sound("../../sounds/animal_aparece.wav")
     somAnimal = pygame.mixer.Sound("../../sounds/som_animal.wav")
-
 
     screen = pygame.display.set_mode([360, 640])
     screen_width = screen.get_width()
