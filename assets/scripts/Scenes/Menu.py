@@ -1,4 +1,4 @@
-import pygame, os
+import pygame
 from setup import setup
 from utils import blit_images
 from HUD import HUD
@@ -124,13 +124,12 @@ class Hall():
 
     def loop(self):
         crashed = False
-        self.button_choice = pygame.image.load("../../images/button_login.png").convert_alpha()
-        self.button_choice = pygame.transform.scale(self.button_choice, \
-            (self.button_choice.get_width()/2, self.button_choice.get_height()/5))
-        self.images_list[self.button_choice] = (12,42)
+        #self.button_choice = pygame.image.load("../../images/button_login.png").convert_alpha()
+        #self.button_choice = pygame.transform.scale(self.button_choice, \
+           # (self.button_choice.get_width()/2, self.button_choice.get_height()/5))
+        #self.images_list[self.button_choice] = (20,42)
 
-
-        self.font_choice = pygame.font.SysFont(os.path.join("../assets", "fonts", 'PORKYS_.ttf'), 50)
+        self.font_choice = pygame.font.Font("../../fonts/PORKYS_.ttf", 50) 
         self.text_choice = self.font_choice.render("Pick One!", False, (0,0,0))
         self.images_list[self.text_choice] = (80,55)
 
