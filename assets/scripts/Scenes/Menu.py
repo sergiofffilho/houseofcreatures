@@ -111,6 +111,8 @@ class Hall():
         pygame.display.flip() # Mostra frame
         pygame.time.wait(2000)
 
+        pygame.mixer.Sound.play(somAnimal)
+
         del self.images_list[self.boxOpened]
 
         self.creatureImage = self.player.creatures.sprites
@@ -213,6 +215,7 @@ if __name__ == '__main__':
     pygame.mixer.init()
     play_sound = pygame.mixer.Sound("../../sounds/play.wav")
     openBox_sound = pygame.mixer.Sound("../../sounds/animal_aparece.wav")
+    somAnimal = pygame.mixer.Sound("../../sounds/som_animal.wav")
 
 
     screen = pygame.display.set_mode([360, 640])
