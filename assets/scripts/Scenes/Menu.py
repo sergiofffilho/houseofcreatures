@@ -167,7 +167,7 @@ class Menu():
         self.button_login = pygame.image.load("../../images/playBT.png").convert_alpha()
         self.button_login = pygame.transform.scale(self.button_login, (130,70))
         self.images_list[self.button_login] = (screen_width/2 -65,400)
-        
+
         self.backgroundsplash = pygame.image.load("../../images/backgroundSplash.png").convert_alpha()
         self.backgroundsplash = pygame.transform.scale(self.backgroundsplash, (screen_width, screen_height))
         self.images_list[self.backgroundsplash] = (0,0)
@@ -176,7 +176,7 @@ class Menu():
         pygame.mixer.music.load ("../../sounds/Ap1.wav")
         pygame.mixer.music.play(-1)
 
-        
+
 
         font_login = pygame.font.SysFont("Arial", 30)
         text_login = font_login.render("", False, (0,0,0))
@@ -213,24 +213,25 @@ def runSplash():
     crashed = False
     clock = pygame.time.Clock() # Tempo de jogo
 
+    splashImage = pygame.image.load("../../images/StudioSplash.png").convert()
+    splashImage = pygame.transform.scale(splashImage, (screen_width, screen_height))
+
     time_s = time.time()
 
     while not crashed:
-
-        splashImage = pygame.image.load("../../images/StudioSplash.png")
-        splashImage = pygame.transform.scale(splashImage, (screen_width, screen_height))
-        splashImage.set_alpha(80)
+        splashImage.set_alpha(5)
 
         screen.blit(splashImage,(0,0))
         pygame.display.update()
-        clock.tick(40) # fps
+        clock.tick(60) # fps
 
-        if time.time() - time_s > 2:
+        if time.time() - time_s > 3:
             crashed = True
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                    crashed = True
+                    pygame.quit()
+                    quit()
 
 if __name__ == '__main__':
     pygame.init()
