@@ -228,6 +228,7 @@ def runSplash():
             if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
+
         pygame.time.delay(30)
         screen.blit(splashImage,(0,0))
         pygame.display.update()
