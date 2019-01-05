@@ -1,3 +1,6 @@
+#coding=utf-8
+
+
 import pygame, time
 from utils import blit_images
 
@@ -20,10 +23,6 @@ class HUD():
         crashed = False
 
         self.loadImages()
-##        self.font_choice = pygame.font.SysFont("Arial", 50)
-##        self.text_choice = self.font_choice.render("TAP ONE", False, (0,0,0))
-##        self.images_list[self.text_choice] = (80,55)
-
 
         while not crashed:
             self.screen.blit(self.background,(0,0))
@@ -32,7 +31,8 @@ class HUD():
 
             for event in pygame.event.get():
                 mouse_pos = pygame.mouse.get_pos()
-
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.detectClick(mouse_pos)
                 if event.type == pygame.QUIT:
                     crashed = True
 
@@ -48,7 +48,7 @@ class HUD():
 
         self.creatureImage = self.player.creatures.sprites
         self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/7, self.creatureImage.get_height()/7))
-        self.images_list[self.creatureImage] = (70,270)
+        self.images_list[self.creatureImage] = (90,270)
 
         #Imagens barra hapness
         self.barHapEmpty = pygame.image.load("../../images/UI_Houseofcreatures/"+\
@@ -107,6 +107,37 @@ class HUD():
         self.old_key_hig = self.barHigFull
         self.images_list[self.barHigFull] = (10, 60)
 
+        #Imagens dos botões do Menu
+
+        self.btnAchievements = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/Achievements.png").convert_alpha()
+        self.btnAchievements = pygame.transform.scale(self.btnAchievements, (self.btnAchievements.get_width(), self.btnAchievements.get_height()))
+        self.images_list[self.btnAchievements] = (-25, 150)
+
+        self.btnGrooming = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/Grooming.png").convert_alpha()
+        self.btnGrooming = pygame.transform.scale(self.btnGrooming, (self.btnGrooming.get_width(), self.btnGrooming.get_height()))
+        self.images_list[self.btnGrooming] = (-20, 220)
+
+        self.btnIventory = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/Inventory.png").convert_alpha()
+        self.btnIventory = pygame.transform.scale(self.btnIventory, (self.btnIventory.get_width(), self.btnIventory.get_height()))
+        self.images_list[self.btnIventory] = (-20, 290)
+
+        self.btnStore = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/Store.png").convert_alpha()
+        self.btnStore = pygame.transform.scale(self.btnStore, (self.btnStore.get_width(), self.btnStore.get_height()))
+        self.images_list[self.btnStore] = (-20, 360)
+
+        self.btnHome = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/Home.png").convert_alpha()
+        self.btnHome = pygame.transform.scale(self.btnHome, (self.btnHome.get_width(), self.btnHome.get_height()))
+        self.images_list[self.btnHome] = (-20, 430)
+
+        self.btnOptions = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/Options.png").convert_alpha()
+        self.btnOptions = pygame.transform.scale(self.btnOptions, (self.btnOptions.get_width(), self.btnOptions.get_height()))
+        self.images_list[self.btnOptions] = (-20, 500)
 
     def mountHUD(self):
         new_key_hap = self.checkHapness()
@@ -126,9 +157,6 @@ class HUD():
             del self.images_list[self.old_key_hig]
             self.old_key_hig = new_key_hig
         self.images_list[new_key_hig] = (10,60)
-
-        print self.images_list
-
 
     def checkHapness(self):
         new_h = self.player.creatures.autoDecreaseHapness(self.timeHap)
@@ -152,7 +180,7 @@ class HUD():
         if self.hungry > new_h:
             self.hungry = new_h
             self.timeHun = time.time()
-        print new_h
+
         if new_h >= 66:
             return self.barHunFull
         elif new_h >= 33 and new_h < 66:
@@ -168,7 +196,7 @@ class HUD():
         if self.hygiene > new_h:
             self.hygiene = new_h
             self.timeHig = time.time()
-        print new_h
+
         if new_h >= 66:
             return self.barHigFull
         elif new_h >= 33 and new_h < 66:
@@ -177,6 +205,69 @@ class HUD():
             return self.barHig30
         else:
             return self.barHigEmpty
+
+    def detectClick(self, mouse_pos):
+        if mouse_pos[0] >= self.images_list[self.btnAchievements][0] and \
+            mouse_pos[1] >= self.images_list[self.btnAchievements][1] and \
+            mouse_pos[0] <= self.images_list[self.btnAchievements][0]+self.btnAchievements.get_width() and \
+            mouse_pos[1] <= self.images_list[self.btnAchievements][1]+self.btnAchievements.get_height():
+            self.images_list[self.btnAchievements] = (0, 150)
+            self.images_list[self.btnGrooming] = (-20, 220)
+            self.images_list[self.btnIventory] = (-20, 290)
+            self.images_list[self.btnStore] = (-20, 360)
+            self.images_list[self.btnHome] = (-20, 430)
+            self.images_list[self.btnOptions] = (-20, 500)
+
+        elif mouse_pos[0] >= self.images_list[self.btnGrooming][0] and \
+            mouse_pos[1] >= self.images_list[self.btnGrooming][1] and \
+            mouse_pos[0] <= self.images_list[self.btnGrooming][0]+self.btnGrooming.get_width() and \
+            mouse_pos[1] <= self.images_list[self.btnGrooming][1]+self.btnGrooming.get_height():
+            self.images_list[self.btnAchievements] = (-20, 150)
+            self.images_list[self.btnGrooming] = (0, 220)
+            self.images_list[self.btnIventory] = (-20, 290)
+            self.images_list[self.btnStore] = (-20, 360)
+            self.images_list[self.btnHome] = (-20, 430)
+            self.images_list[self.btnOptions] = (-20, 500)
+        elif mouse_pos[0] >= self.images_list[self.btnIventory][0] and \
+            mouse_pos[1] >= self.images_list[self.btnIventory][1] and \
+            mouse_pos[0] <= self.images_list[self.btnIventory][0]+self.btnIventory.get_width() and \
+            mouse_pos[1] <= self.images_list[self.btnIventory][1]+self.btnIventory.get_height():
+            self.images_list[self.btnAchievements] = (-20, 150)
+            self.images_list[self.btnGrooming] = (-20, 220)
+            self.images_list[self.btnIventory] = (0, 290)
+            self.images_list[self.btnStore] = (-20, 360)
+            self.images_list[self.btnHome] = (-20, 430)
+            self.images_list[self.btnOptions] = (-20, 500)
+        elif mouse_pos[0] >= self.images_list[self.btnStore][0] and \
+            mouse_pos[1] >= self.images_list[self.btnStore][1] and \
+            mouse_pos[0] <= self.images_list[self.btnStore][0]+self.btnStore.get_width() and \
+            mouse_pos[1] <= self.images_list[self.btnStore][1]+self.btnStore.get_height():
+            self.images_list[self.btnAchievements] = (-20, 150)
+            self.images_list[self.btnGrooming] = (-20, 220)
+            self.images_list[self.btnIventory] = (-20, 290)
+            self.images_list[self.btnStore] = (0, 360)
+            self.images_list[self.btnHome] = (-20, 430)
+            self.images_list[self.btnOptions] = (-20, 500)
+        elif mouse_pos[0] >= self.images_list[self.btnHome][0] and \
+            mouse_pos[1] >= self.images_list[self.btnHome][1] and \
+            mouse_pos[0] <= self.images_list[self.btnHome][0]+self.btnHome.get_width() and \
+            mouse_pos[1] <= self.images_list[self.btnHome][1]+self.btnHome.get_height():
+            self.images_list[self.btnAchievements] = (-20, 150)
+            self.images_list[self.btnGrooming] = (-20, 220)
+            self.images_list[self.btnIventory] = (-20, 290)
+            self.images_list[self.btnStore] = (-20, 360)
+            self.images_list[self.btnHome] = (0, 430)
+            self.images_list[self.btnOptions] = (-20, 500)
+        elif mouse_pos[0] >= self.images_list[self.btnOptions][0] and \
+            mouse_pos[1] >= self.images_list[self.btnOptions][1] and \
+            mouse_pos[0] <= self.images_list[self.btnOptions][0]+self.btnOptions.get_width() and \
+            mouse_pos[1] <= self.images_list[self.btnOptions][1]+self.btnOptions.get_height():
+            self.images_list[self.btnAchievements] = (-20, 150)
+            self.images_list[self.btnGrooming] = (-20, 220)
+            self.images_list[self.btnIventory] = (-20, 290)
+            self.images_list[self.btnStore] = (-20, 360)
+            self.images_list[self.btnHome] = (-20, 430)
+            self.images_list[self.btnOptions] = (0, 500)
 
 
 

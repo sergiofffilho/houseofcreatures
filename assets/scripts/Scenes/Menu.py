@@ -118,7 +118,7 @@ class Hall():
         self.creatureImage = self.player.creatures.sprites
         self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/7, self.creatureImage.get_height()/7))
 
-        self.images_list[self.creatureImage] = (70,270)
+        self.images_list[self.creatureImage] = (90,270)
 
         self.loop()
 
@@ -226,7 +226,3 @@ if __name__ == '__main__':
 
     menu = Menu()
     menu.loop()
-##    h = Hall()
-##    h.oppening()
-
-
