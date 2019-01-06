@@ -20,20 +20,20 @@ class RopeSkip(Minigame):
 
         self.loadImages()
 
-        playTime = 0
-        cycleTime = 0
-        interval = .15
-        frameRope = 0
+        self.playTime = 0
+        self.cycleTime = 0
+        self.interval = .15
+        self.frameRope = 0
 
         while not crashed:
             milliseconds = self.clock.tick(60) # fps
             seconds = milliseconds/1000.0
-            playTime += seconds
-            cycleTime += seconds
+            self.playTime += seconds
+            self.cycleTime += seconds
 
-            text_time = self.font_time.render(str(int(60-playTime)), False, (255,255,255))
+            self.text_time = self.font_time.render(str(int(21-self.playTime)), False, (255,255,255))
 
-            if playTime > 60:
+            if self.playTime > 21:
                 self.backHUD()
 
             for event in pygame.event.get():
@@ -45,17 +45,17 @@ class RopeSkip(Minigame):
                     crashed = True
 
             self.screen.blit(self.background,(0,0))
-            self.screen.blit(text_time,(155,100))
+            self.screen.blit(self.text_time,(160,100))
 
-            if cycleTime > interval:
+            if self.cycleTime > self.interval:
 
-                frameRope += 1
-                if frameRope >= len(self.ropeGroup):
-                    frameRope = 0
+                self.frameRope += 1
+                if self.frameRope >= len(self.ropeGroup):
+                    self.frameRope = 0
 
-                cycleTime = 0
+                self.cycleTime = 0
 
-            self.screen.blit(self.ropeGroup[frameRope],(20,400))
+            self.screen.blit(self.ropeGroup[self.frameRope],(20,400))
 
             blit_images(self.screen, self.images_list)
 
@@ -98,12 +98,22 @@ class RopeSkip(Minigame):
 
 
     def jump(self):
-##        pygame.display.update() # Mostra frame
-##        self.clock.tick(60) # fps
+
+
         jumping = True
         finishJump = False
 
         while not finishJump:
+            milliseconds = self.clock.tick(60) # fps
+            seconds = milliseconds/1000.0
+            self.playTime += seconds
+            self.cycleTime += seconds
+
+            self.text_time = self.font_time.render(str(int(21-self.playTime)), False, (255,255,255))
+
+            if self.playTime > 21:
+                self.backHUD()
+
             if self.images_list[self.creatureImage][1] > 200 and jumping:
                 self.images_list[self.creatureImage] = (120, self.images_list[self.creatureImage][1]-5)
 
@@ -114,10 +124,19 @@ class RopeSkip(Minigame):
             else:
                 finishJump = True
 
+            if self.cycleTime > self.interval:
+                self.frameRope += 1
+                if self.frameRope >= len(self.ropeGroup):
+                    self.frameRope = 0
+
+                self.cycleTime = 0
+
             self.screen.blit(self.background,(0,0))
+            self.screen.blit(self.text_time,(160,100))
+            self.screen.blit(self.ropeGroup[self.frameRope],(20,400))
+
             blit_images(self.screen, self.images_list)
             pygame.display.update() # Mostra frame
-            self.clock.tick(60) # fps
 
 
     def backHUD(self):
