@@ -218,7 +218,7 @@ def runSplash():
     splashImage = pygame.transform.scale(splashImage, (screen_width, screen_height))
 
     time_s = time.time()
-    splashImage.set_alpha(25)
+    splashImage.set_alpha(35)
 
     while not crashed:
         if time.time() - time_s > 3:
@@ -231,6 +231,7 @@ def runSplash():
 
         pygame.time.delay(30)
         screen.blit(splashImage,(0,0))
+        
         pygame.display.update()
         clock.tick(60) # fps
 
