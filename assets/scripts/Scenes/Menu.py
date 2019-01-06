@@ -164,15 +164,15 @@ class Hall():
 class Menu():
     def __init__(self):
         self.images_list = {}
-
+        self.button_login = pygame.image.load("../../images/playBT.png").convert_alpha()
+        self.button_login = pygame.transform.scale(self.button_login, (130,70))
+        self.images_list[self.button_login] = (screen_width/2 -65,400)
 
         self.backgroundsplash = pygame.image.load("../../images/backgroundSplash.png").convert_alpha()
         self.backgroundsplash = pygame.transform.scale(self.backgroundsplash, (screen_width, screen_height))
         self.images_list[self.backgroundsplash] = (0,0)
 
-        self.button_login = pygame.image.load("../../images/playBT.png").convert_alpha()
-        self.button_login = pygame.transform.scale(self.button_login, (130,70))
-        self.images_list[self.button_login] = (screen_width/2 -65,400)
+        
 
         pygame.mixer.music.load ("../../sounds/Ap1.wav")
         pygame.mixer.music.play(-1)
@@ -218,7 +218,7 @@ def runSplash():
     splashImage = pygame.transform.scale(splashImage, (screen_width, screen_height))
 
     time_s = time.time()
-    splashImage.set_alpha(5)
+    splashImage.set_alpha(25)
 
     while not crashed:
         if time.time() - time_s > 3:
