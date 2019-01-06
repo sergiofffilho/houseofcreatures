@@ -7,10 +7,16 @@ from utils import blit_images
 
 class RopeSkip(Minigame):
     def __init__(self, HUD, player, screen, hapnessGain, hungryCost, hygieneCost, score,\
-     difficultMultuplier, jumpCounter = 0, ropeVelocity = 1.0):
+     difficultMultuplier, jumpCounter = 0):
         Minigame.__init__(self, HUD, player, screen, hapnessGain, hungryCost, hygieneCost, score, difficultMultuplier)
         self._jumpCounter = jumpCounter
-        self._ropeVelocity = ropeVelocity
+
+        if difficultMultuplier == 3:
+            self._ropeVelocity = .08
+        elif difficultMultuplier == 2:
+            self._ropeVelocity = .1
+        else:
+            self._ropeVelocity = .12
 
         self.clock = pygame.time.Clock()
         self.images_list = {}
@@ -22,20 +28,12 @@ class RopeSkip(Minigame):
 
         self.playTime = 0
         self.cycleTime = 0
-        self.interval = .15
         self.frameRope = 0
 
+        self.creatureRect, self.ropeRect = None, None
+        self.collide = False
+
         while not crashed:
-            milliseconds = self.clock.tick(60) # fps
-            seconds = milliseconds/1000.0
-            self.playTime += seconds
-            self.cycleTime += seconds
-
-            self.text_time = self.font_time.render(str(int(21-self.playTime)), False, (255,255,255))
-
-            if self.playTime > 21:
-                self.backHUD()
-
             for event in pygame.event.get():
                 mouse_pos = pygame.mouse.get_pos()
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -44,22 +42,8 @@ class RopeSkip(Minigame):
                 if event.type == pygame.QUIT:
                     crashed = True
 
-            self.screen.blit(self.background,(0,0))
-            self.screen.blit(self.text_time,(160,100))
+            self.updateScreen()
 
-            if self.cycleTime > self.interval:
-
-                self.frameRope += 1
-                if self.frameRope >= len(self.ropeGroup):
-                    self.frameRope = 0
-
-                self.cycleTime = 0
-
-            self.screen.blit(self.ropeGroup[self.frameRope],(20,400))
-
-            blit_images(self.screen, self.images_list)
-
-            pygame.display.update() # Mostra frame
         pygame.quit()
         quit()
 
@@ -69,7 +53,7 @@ class RopeSkip(Minigame):
 
         self.creatureImage = self.player.creatures.sprites
         self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/10, self.creatureImage.get_height()/10))
-        self.images_list[self.creatureImage] = (120,320)
+        self.creaturePos = (120,400)
 
         self.font_time = pygame.font.Font("../../fonts/PORKYS_.ttf", 42)
 
@@ -79,6 +63,9 @@ class RopeSkip(Minigame):
         ropeOne = pygame.transform.scale(ropeOne, (ropeOne.get_width()/6, ropeOne.get_height()/6))
         self.ropeGroup.append(ropeOne)
 
+        self.ropeCollider = pygame.Surface((40,5))  # the size of your rect
+        self.ropeCollider.set_alpha(0)                # alpha level
+
         ropeTwo = pygame.image.load("../../images/icon_corda_2.png").convert_alpha()
         ropeTwo = pygame.transform.scale(ropeTwo, (ropeTwo.get_width()/6, ropeTwo.get_height()/6))
         self.ropeGroup.append(ropeTwo)
@@ -87,57 +74,76 @@ class RopeSkip(Minigame):
         ropeThree = pygame.transform.scale(ropeThree, (ropeThree.get_width()/6, ropeThree.get_height()/6))
         self.ropeGroup.append(ropeThree)
 
-        self.ropeGroup.append(pygame.transform.flip(ropeThree, False, True))
-        self.ropeGroup.append(pygame.transform.flip(ropeTwo, False, True))
-        self.ropeGroup.append(pygame.transform.flip(ropeOne, False, True))
-        self.ropeGroup.append(pygame.transform.flip(ropeTwo, False, True))
-        self.ropeGroup.append(pygame.transform.flip(ropeThree, False, True))
+        ropeFour = pygame.image.load("../../images/icon_corda_4.png").convert_alpha()
+        ropeFour = pygame.transform.scale(ropeFour, (ropeFour.get_width()/6, ropeFour.get_height()/6))
+        self.ropeGroup.append(ropeFour)
+
+        ropeFive = pygame.image.load("../../images/icon_corda_5.png").convert_alpha()
+        ropeFive = pygame.transform.scale(ropeFive, (ropeFive.get_width()/6, ropeFive.get_height()/6))
+        self.ropeGroup.append(ropeFive)
+
+        ropeSix = pygame.image.load("../../images/icon_corda_6.png").convert_alpha()
+        ropeSix = pygame.transform.scale(ropeSix, (ropeSix.get_width()/6, ropeSix.get_height()/6))
+        self.ropeGroup.append(ropeSix)
+
+        self.ropeGroup.append(ropeFive)
+        self.ropeGroup.append(ropeFour)
         self.ropeGroup.append(ropeThree)
         self.ropeGroup.append(ropeTwo)
 
-
-
     def jump(self):
-
-
         jumping = True
         finishJump = False
 
         while not finishJump:
-            milliseconds = self.clock.tick(60) # fps
-            seconds = milliseconds/1000.0
-            self.playTime += seconds
-            self.cycleTime += seconds
+            if self.creaturePos[1] > 300 and jumping:
+                self.creaturePos = (120, self.creaturePos[1]-7)
 
-            self.text_time = self.font_time.render(str(int(21-self.playTime)), False, (255,255,255))
-
-            if self.playTime > 21:
-                self.backHUD()
-
-            if self.images_list[self.creatureImage][1] > 200 and jumping:
-                self.images_list[self.creatureImage] = (120, self.images_list[self.creatureImage][1]-5)
-
-            elif self.images_list[self.creatureImage][1] < 320:
-                self.images_list[self.creatureImage] = (120, self.images_list[self.creatureImage][1]+10)
+            elif self.creaturePos[1] < 400:
+                self.creaturePos = (120, self.creaturePos[1]+10)
                 jumping = False
 
             else:
+                if not self.collide:
+                    self.score += 1
                 finishJump = True
 
-            if self.cycleTime > self.interval:
-                self.frameRope += 1
-                if self.frameRope >= len(self.ropeGroup):
-                    self.frameRope = 0
+            self.updateScreen()
 
-                self.cycleTime = 0
+    def updateScreen(self):
+        milliseconds = self.clock.tick(60) # fps
+        seconds = milliseconds/1000.0
+        self.playTime += seconds
+        self.cycleTime += seconds
 
-            self.screen.blit(self.background,(0,0))
-            self.screen.blit(self.text_time,(160,100))
-            self.screen.blit(self.ropeGroup[self.frameRope],(20,400))
+        self.text_time = self.font_time.render(str(int(21-self.playTime)), False, (255,255,255))
+        self.text_score = self.font_time.render(str(self.score), False, (255,0,0))
 
-            blit_images(self.screen, self.images_list)
-            pygame.display.update() # Mostra frame
+        if self.playTime > 21:
+            self.backHUD()
 
+        if self.cycleTime > self._ropeVelocity:
+            self.frameRope += 1
+            if self.frameRope >= len(self.ropeGroup):
+                self.frameRope = 0
+
+            self.cycleTime = 0
+
+        self.screen.blit(self.background,(0,0))
+        self.screen.blit(self.text_time,(160,100))
+        self.screen.blit(self.text_score,(160,150))
+        self.creatureRect = self.screen.blit(self.creatureImage, self.creaturePos)
+        self.screen.blit(self.ropeGroup[self.frameRope],(20,240))
+
+        if self.frameRope == 0:
+            self.ropeRect = self.screen.blit(self.ropeCollider, (160,520))
+
+            if self.creatureRect.colliderect(self.ropeRect):
+                self.collide = True
+            else:
+                self.collide = False
+
+        pygame.display.update() # Mostra frame
 
     def backHUD(self):
         self.HUD.__init__(self.player, self.screen)

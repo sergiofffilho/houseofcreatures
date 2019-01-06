@@ -27,9 +27,9 @@ def initiateItens():
     return itensList
 
 def setup():
-    creatures = ["croc", "doggy", "kitty", "seal"]
+    creatures = ["croc", "doggy", "kitty"]
 
-    randomInt = random.randint(0,3)
+    randomInt = random.randint(0,len(creatures)-1)
 
     creatureImage = pygame.image.load("../../images/animal_"+creatures[randomInt]+".png").convert_alpha()
     randomCreature = Creature(creatures[randomInt], creatureImage)
@@ -44,7 +44,7 @@ def setup():
 
 def initiateRoadSkip(HUD, player, screen):
     hapGain, hunCost, higCost = 10, 10, 10
-    score = 500
+    score = 0
     difficult = 1
 
     rS = RopeSkip(HUD, player, screen, hapGain, hunCost, higCost, score, difficult)
