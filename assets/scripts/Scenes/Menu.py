@@ -168,24 +168,17 @@ class Hall():
 class Menu():
     def __init__(self):
         self.images_list = {}
+
+        self.backgroundsplash = pygame.image.load("../../images/backgroundSplash.png").convert_alpha()
+        self.backgroundsplash = pygame.transform.scale(self.backgroundsplash, (screen_width, screen_height))
+##        self.images_list[self.backgroundsplash] = (0,0)
+
         self.button_login = pygame.image.load("../../images/playBT.png").convert_alpha()
         self.button_login = pygame.transform.scale(self.button_login, (130,70))
         self.images_list[self.button_login] = (screen_width/2 -65,400)
 
-        self.backgroundsplash = pygame.image.load("../../images/backgroundSplash.png").convert_alpha()
-        self.backgroundsplash = pygame.transform.scale(self.backgroundsplash, (screen_width, screen_height))
-        self.images_list[self.backgroundsplash] = (0,0)
-
-
-
         pygame.mixer.music.load ("../../sounds/Ap1.wav")
         pygame.mixer.music.play(-1)
-
-
-
-        font_login = pygame.font.SysFont("Arial", 30)
-        text_login = font_login.render("", False, (0,0,0))
-        self.images_list[text_login] = (145,405)
 
         self.clock = pygame.time.Clock() # Tempo de jogo
 
@@ -208,6 +201,7 @@ class Menu():
                 if event.type == pygame.QUIT:
                     crashed = True
 
+            screen.blit(self.backgroundsplash, (0, 0))
             blit_images(screen, self.images_list)
             pygame.display.update() # Mostra frame
             self.clock.tick(60) # fps
