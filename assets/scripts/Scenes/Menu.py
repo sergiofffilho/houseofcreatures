@@ -14,16 +14,18 @@ class Hall():
         self.background = pygame.image.load("../../images/background_big.png").convert_alpha()
         self.background = pygame.transform.scale(self.background, (screen_width, screen_height))
 
-
-        self.bubble = pygame.image.load("../../images/icon_bubble.png").convert_alpha()
+        self.bubble = pygame.image.load("../../images/icon_bubble1.png").convert_alpha()
         self.bubble = pygame.transform.scale(self.bubble, (self.bubble.get_width()/10, self.bubble.get_height()/10))
         self.images_list[self.bubble] = (20,55)
 
-        self.font_ballon = pygame.font.SysFont("Arial", 18)
-        self.text_ballon = self.font_ballon.render("Welcome", False, (0,0,0))
-        self.text_ballon2 = self.font_ballon.render("tap to continue!", False, (0,0,0))
-        self.images_list[self.text_ballon] = (70,90)
-        self.images_list[self.text_ballon2] = (50,110)
+        self.bubble2 = pygame.image.load("../../images/icon_bubble2.png").convert_alpha()
+        self.bubble2 = pygame.transform.scale(self.bubble2, (self.bubble2.get_width()/10, self.bubble2.get_height()/10))
+
+##        self.font_ballon = pygame.font.SysFont("Arial", 18)
+##        self.text_ballon = self.font_ballon.render("Welcome", False, (0,0,0))
+##        self.text_ballon2 = self.font_ballon.render("tap to continue!", False, (0,0,0))
+##        self.images_list[self.text_ballon] = (70,90)
+##        self.images_list[self.text_ballon2] = (50,110)
 
         self.detective = pygame.image.load("../../images/animal_tutorial_cat.png").convert_alpha()
         self.detective = pygame.transform.scale(self.detective, (self.detective.get_width()/3, self.detective.get_height()/3))
@@ -66,9 +68,12 @@ class Hall():
                             if not self.firstText:
                                 self.finishDialog = True
                             else:
-                                del self.images_list[self.text_ballon], self.images_list[self.text_ballon2]
-                                self.text_ballon = self.font_ballon.render("Open the box!", False, (0,0,0))
-                                self.images_list[self.text_ballon] = (50,110)
+##                                del self.images_list[self.text_ballon], self.images_list[self.text_ballon2]
+##                                self.text_ballon = self.font_ballon.render("Open the box!", False, (0,0,0))
+##                                self.images_list[self.text_ballon] = (50,110)
+                                del self.images_list[self.bubble]
+                                self.images_list[self.bubble2] = (20,55)
+
                                 self.firstText = False
                         if event.type == pygame.QUIT:
                             self.crashed = True
@@ -77,8 +82,7 @@ class Hall():
                         (self.images_list[self.detective][0] + 8, 640 - self.detective.get_size()[1])
                         self.flagAnimDetective = False
                 else:
-                    del self.images_list[self.detective], \
-                    self.images_list[self.text_ballon], self.images_list[self.bubble]
+                    del self.images_list[self.detective], self.images_list[self.bubble2]
             except KeyError:
                 if not self.opened:
                     self.images_list[self.boxClosed] = (78, 300)
@@ -172,7 +176,7 @@ class Menu():
         self.backgroundsplash = pygame.transform.scale(self.backgroundsplash, (screen_width, screen_height))
         self.images_list[self.backgroundsplash] = (0,0)
 
-        
+
 
         pygame.mixer.music.load ("../../sounds/Ap1.wav")
         pygame.mixer.music.play(-1)
@@ -231,7 +235,7 @@ def runSplash():
 
         pygame.time.delay(30)
         screen.blit(splashImage,(0,0))
-        
+
         pygame.display.update()
         clock.tick(60) # fps
 
