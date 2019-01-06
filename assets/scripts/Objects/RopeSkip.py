@@ -146,6 +146,7 @@ class RopeSkip(Minigame):
         pygame.display.update() # Mostra frame
 
     def backHUD(self):
+        self.player.coins += self.scoreToCoins(self.score)
         self.HUD.__init__(self.player, self.screen)
         self.HUD.loop()
 

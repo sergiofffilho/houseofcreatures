@@ -13,10 +13,8 @@ class Minigame:
         self._difficultMultiplier = difficultMultiplier
 
     #Método para transformar os scores em coins para o player
-    def scoreToCoins(self):
-        if self._score % 50 == 0:
-             self._player.coins += self._score / 50
-        print self._player.coins
+    def scoreToCoins(self, value):
+        return value / 10
 
     #Métodos getters e setters
     @property
