@@ -20,6 +20,7 @@ class RopeSkip(Minigame):
 
         self.loadImages()
 
+        playTime = 0
         cycleTime = 0
         interval = .15
         frameRope = 0
@@ -27,7 +28,13 @@ class RopeSkip(Minigame):
         while not crashed:
             milliseconds = self.clock.tick(60) # fps
             seconds = milliseconds/1000.0
+            playTime += seconds
             cycleTime += seconds
+
+            text_time = self.font_time.render(str(int(60-playTime)), False, (255,255,255))
+
+            if playTime > 60:
+                self.backHUD()
 
             for event in pygame.event.get():
                 mouse_pos = pygame.mouse.get_pos()
@@ -38,6 +45,7 @@ class RopeSkip(Minigame):
                     crashed = True
 
             self.screen.blit(self.background,(0,0))
+            self.screen.blit(text_time,(155,100))
 
             if cycleTime > interval:
 
@@ -63,6 +71,8 @@ class RopeSkip(Minigame):
         self.creatureImage = pygame.transform.scale(self.creatureImage, (self.creatureImage.get_width()/10, self.creatureImage.get_height()/10))
         self.images_list[self.creatureImage] = (120,320)
 
+        self.font_time = pygame.font.Font("../../fonts/PORKYS_.ttf", 42)
+
         self.ropeGroup = []
 
         ropeOne = pygame.image.load("../../images/icon_corda.png").convert_alpha()
@@ -76,7 +86,6 @@ class RopeSkip(Minigame):
         ropeThree = pygame.image.load("../../images/icon_corda_3.png").convert_alpha()
         ropeThree = pygame.transform.scale(ropeThree, (ropeThree.get_width()/6, ropeThree.get_height()/6))
         self.ropeGroup.append(ropeThree)
-
 
         self.ropeGroup.append(pygame.transform.flip(ropeThree, False, True))
         self.ropeGroup.append(pygame.transform.flip(ropeTwo, False, True))
