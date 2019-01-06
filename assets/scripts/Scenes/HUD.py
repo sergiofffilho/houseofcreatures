@@ -16,6 +16,7 @@ class HUD():
         self.hapness = player.creatures.hapness
         self.hungry = player.creatures.hungry
         self.hygiene = player.creatures.hygiene
+
         self.timeHap = time.time()
         self.timeHun = time.time()
         self.timeHig = time.time()
@@ -170,7 +171,7 @@ class HUD():
         self.images_list[new_key_hig] = (10,60)
 
     def checkHapness(self):
-        new_h = self.player.creatures.autoDecreaseHapness(self.timeHap)
+        new_h = self.player.creatures.autoDecreaseHapness(self.timeHap, self.hapness)
 
         if self.hapness > new_h:
             self.hapness = new_h

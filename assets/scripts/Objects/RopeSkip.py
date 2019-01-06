@@ -147,6 +147,9 @@ class RopeSkip(Minigame):
 
     def backHUD(self):
         self.player.coins += self.scoreToCoins(self.score)
+        self.player.creatures.hapness += self.hapnessGain
+        self.player.creatures.hungry -= self.hungryCost
+        self.player.creatures.hygiene -= self.hygieneCost
         self.HUD.__init__(self.player, self.screen)
         self.HUD.loop()
 
