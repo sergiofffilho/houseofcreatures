@@ -36,6 +36,8 @@ class HUD():
         while not crashed:
             self.screen.blit(self.background,(0,0))
 
+            self.text_qtd_food = self.font_coins.render("x" + str(self.qtd_food), False, (0, 0, 0))
+
             self.mountHUD()
 
             for event in pygame.event.get():
@@ -51,9 +53,8 @@ class HUD():
                 self.screen.blit(self.iconRope, (31,98))
             elif self.activePanelInventory:
                 self.screen.blit(self.panelInventory, (0,0))
-                self.screen.blit(self.iconFood, (31,98))
-                self.screen.blit(self.text_qtd_food, (31,98))
-
+                self.screen.blit(self.iconFood, (31,100))
+                self.screen.blit(self.text_qtd_food, (80,152))
             elif self.activePanelStore:
                 self.screen.blit(self.panelStore, (0,0))
 
@@ -186,6 +187,7 @@ class HUD():
             "Buttons/can_of_food.png").convert_alpha()
         self.iconFood = pygame.transform.scale(self.iconFood, (self.iconFood.get_width()/3, self.iconFood.get_height()/3))
 
+        self.font_coins = pygame.font.Font("../../fonts/PORKYS_.ttf", 16)
         self.text_qtd_food = self.font_coins.render("x" + str(self.qtd_food), False, (0, 0, 0))
 
         self.panelStore = pygame.image.load("../../images/UI_Houseofcreatures/"+\
@@ -206,11 +208,11 @@ class HUD():
             self.old_key_hun = new_key_hun
         self.images_list[new_key_hun] = (10,35)
 
-##        new_key_hig = self.checkHygiene()
-##        if new_key_hig != self.old_key_hig:
-##            del self.images_list[self.old_key_hig]
-##            self.old_key_hig = new_key_hig
-##        self.images_list[new_key_hig] = (10,60)
+        new_key_hig = self.checkHygiene()
+        if new_key_hig != self.old_key_hig:
+            del self.images_list[self.old_key_hig]
+            self.old_key_hig = new_key_hig
+        self.images_list[new_key_hig] = (10,60)
 
     def checkHapness(self):
         new_h = self.player.creatures.autoDecreaseHapness(self.timeHap, self.hapness)
@@ -229,7 +231,7 @@ class HUD():
             return self.barHapEmpty
 
     def checkHungry(self):
-        new_h = self.player.creatures.autoDecreaseHungry(self.timeHun)
+        new_h = self.player.creatures.autoDecreaseHungry(self.timeHun, self.hungry)
 
         if self.hungry > new_h:
             self.hungry = new_h
@@ -262,7 +264,6 @@ class HUD():
 
     def detectClick(self, mouse_pos):
         if self.activePanelMinijogos:
-##            print mouse_pos
             if mouse_pos[0] >= 327 and mouse_pos[1] >= 41 and \
                 mouse_pos[0] <= 353 and mouse_pos[1] <= 64:
                     self.activePanelMinijogos = False
@@ -276,6 +277,9 @@ class HUD():
                 mouse_pos[0] <= 353 and mouse_pos[1] <= 64:
                     self.activePanelInventory = False
                     self.images_list[self.btnIventory] = (-20, 290)
+            if mouse_pos[0] >= 36 and mouse_pos[1] >= 102 and \
+                mouse_pos[0] <= 95 and mouse_pos[1] <= 160:
+                self.useFood()
 
         elif self.activePanelStore:
             if mouse_pos[0] >= 327 and mouse_pos[1] >= 41 and \
@@ -354,6 +358,13 @@ class HUD():
                 self.images_list[self.btnStore] = (-20, 360)
                 self.images_list[self.btnHome] = (-20, 430)
                 self.images_list[self.btnOptions] = (0, 500)
+
+    def useFood(self):
+        self.qtd_food -= 1
+        if self.qtd_food < 0:
+            self.qtd_food = 0
+
+        self.hungry += 20
 
 
 

@@ -43,7 +43,7 @@ def setup():
     return player, inventory, store
 
 def initiateRoadSkip(HUD, hall, player, screen):
-    hapGain, hunCost, higCost = 30, 30, 10
+    hapGain, hunCost, higCost = 30, 15, 10
     score = 0
     difficult = 1
 

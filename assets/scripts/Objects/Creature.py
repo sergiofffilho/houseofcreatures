@@ -20,7 +20,7 @@ class Creature:
     #Métodos para decrementar com o tempo os atributos hapness, hungry, hygiene
     def autoDecreaseHapness(self, time_start, hap):
         self._hapness = hap
-        if time.time() - time_start > 0.2:
+        if time.time() - time_start > 0.4:
             self._hapness -= 1
             if self._hapness < 0:
                 self._hapness = 0
@@ -30,15 +30,16 @@ class Creature:
 
 
 
-    def autoDecreaseHungry(self, time_start):
-        if time.time() - time_start > 0.2:
+    def autoDecreaseHungry(self, time_start, hun):
+        self._hungry = hun
+        if time.time() - time_start > 0.4:
             self._hungry -= 1
             if self._hungry < 0:
                 self._hungry = 0
         return self._hungry
 
     def autoDecreaseHygiene(self, time_start):
-        if time.time() - time_start > 0.2:
+        if time.time() - time_start > 1:
             self._hygiene -= 1
             if self._hygiene < 0:
                 self._hygiene = 0
