@@ -26,6 +26,7 @@ class HUD():
         crashed = False
         self.activePanelMinijogos = False
         self.activePanelInventory = False
+        self.activePanelStore = False
 
         self.loadImages()
 
@@ -47,6 +48,8 @@ class HUD():
                 self.screen.blit(self.iconRope, (31,98))
             elif self.activePanelInventory:
                 self.screen.blit(self.panelInventory, (0,0))
+            elif self.activePanelStore:
+                self.screen.blit(self.panelStore, (0,0))
 
             pygame.display.update() # Mostra frame
             self.clock.tick(60) # fps
@@ -173,6 +176,10 @@ class HUD():
             "MenuContent/Inventory.png").convert_alpha()
         self.panelInventory = pygame.transform.scale(self.panelInventory, (self.screen.get_width(), self.screen.get_height()))
 
+        self.panelStore = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "MenuContent/Store.png").convert_alpha()
+        self.panelStore = pygame.transform.scale(self.panelStore, (self.screen.get_width(), self.screen.get_height()))
+
 
     def mountHUD(self):
         new_key_hap = self.checkHapness()
@@ -251,11 +258,18 @@ class HUD():
             if mouse_pos[0] >= 36 and mouse_pos[1] >= 102 and \
                 mouse_pos[0] <= 95 and mouse_pos[1] <= 160:
                 initiateRoadSkip(self, self.hall, self.player, self.screen)
+
         elif self.activePanelInventory:
             if mouse_pos[0] >= 327 and mouse_pos[1] >= 41 and \
                 mouse_pos[0] <= 353 and mouse_pos[1] <= 64:
                     self.activePanelInventory = False
                     self.images_list[self.btnIventory] = (-20, 290)
+
+        elif self.activePanelStore:
+            if mouse_pos[0] >= 327 and mouse_pos[1] >= 41 and \
+                mouse_pos[0] <= 353 and mouse_pos[1] <= 64:
+                    self.activePanelStore = False
+                    self.images_list[self.btnStore] = (-20, 360)
 
         else:
             if mouse_pos[0] >= self.images_list[self.btnAchievements][0] and \
@@ -303,6 +317,7 @@ class HUD():
                 self.images_list[self.btnStore] = (0, 360)
                 self.images_list[self.btnHome] = (-20, 430)
                 self.images_list[self.btnOptions] = (-20, 500)
+                self.activePanelStore = True
 
             elif mouse_pos[0] >= self.images_list[self.btnHome][0] and \
                 mouse_pos[1] >= self.images_list[self.btnHome][1] and \
