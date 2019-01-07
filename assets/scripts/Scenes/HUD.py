@@ -25,6 +25,7 @@ class HUD():
     def loop(self):
         crashed = False
         self.activePanelMinijogos = False
+        self.activePanelInventory = False
 
         self.loadImages()
 
@@ -44,6 +45,8 @@ class HUD():
             if self.activePanelMinijogos:
                 self.screen.blit(self.panelMinijogos, (0,0))
                 self.screen.blit(self.iconRope, (31,98))
+            elif self.activePanelInventory:
+                self.screen.blit(self.panelInventory, (0,0))
 
             pygame.display.update() # Mostra frame
             self.clock.tick(60) # fps
@@ -166,6 +169,10 @@ class HUD():
             "Buttons/MiniGame_Rope.png").convert_alpha()
         self.iconRope = pygame.transform.scale(self.iconRope, (70, 68))
 
+        self.panelInventory = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "MenuContent/Inventory.png").convert_alpha()
+        self.panelInventory = pygame.transform.scale(self.panelInventory, (self.screen.get_width(), self.screen.get_height()))
+
 
     def mountHUD(self):
         new_key_hap = self.checkHapness()
@@ -244,6 +251,11 @@ class HUD():
             if mouse_pos[0] >= 36 and mouse_pos[1] >= 102 and \
                 mouse_pos[0] <= 95 and mouse_pos[1] <= 160:
                 initiateRoadSkip(self, self.hall, self.player, self.screen)
+        elif self.activePanelInventory:
+            if mouse_pos[0] >= 327 and mouse_pos[1] >= 41 and \
+                mouse_pos[0] <= 353 and mouse_pos[1] <= 64:
+                    self.activePanelInventory = False
+                    self.images_list[self.btnIventory] = (-20, 290)
 
         else:
             if mouse_pos[0] >= self.images_list[self.btnAchievements][0] and \
@@ -279,6 +291,7 @@ class HUD():
                 self.images_list[self.btnStore] = (-20, 360)
                 self.images_list[self.btnHome] = (-20, 430)
                 self.images_list[self.btnOptions] = (-20, 500)
+                self.activePanelInventory = True
 
             elif mouse_pos[0] >= self.images_list[self.btnStore][0] and \
                 mouse_pos[1] >= self.images_list[self.btnStore][1] and \
