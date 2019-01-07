@@ -132,8 +132,12 @@ class RopeSkip(Minigame):
         self.screen.blit(self.background,(0,0))
         self.screen.blit(self.text_time,(160,100))
         self.screen.blit(self.text_score,(160,150))
-        self.creatureRect = self.screen.blit(self.creatureImage, self.creaturePos)
-        self.screen.blit(self.ropeGroup[self.frameRope],(20,240))
+        if self.frameRope < 6:
+            self.creatureRect = self.screen.blit(self.creatureImage, self.creaturePos)
+            self.screen.blit(self.ropeGroup[self.frameRope],(20,240))
+        else:
+            self.screen.blit(self.ropeGroup[self.frameRope],(20,240))
+            self.creatureRect = self.screen.blit(self.creatureImage, self.creaturePos)
 
         if self.frameRope == 0:
             self.ropeRect = self.screen.blit(self.ropeCollider, (160,520))
