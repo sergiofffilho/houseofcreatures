@@ -1,3 +1,5 @@
+#coding=utf-8
+
 import pygame, time
 from setup import setup
 from utils import blit_images
@@ -122,9 +124,14 @@ class Hall():
 
         crashed = False
 
+        self.activePanelInventory = False
+        self.activePanelStore = False
+
         self.font_choice = pygame.font.Font("../../fonts/PORKYS_.ttf", 50)
         self.text_choice = self.font_choice.render("Pick One!", False, (0,0,0))
         self.images_list[self.text_choice] = (80,55)
+
+        self.loadImages()
 
         while not crashed:
             screen.blit(self.background,(0,0))
@@ -132,7 +139,11 @@ class Hall():
             for event in pygame.event.get():
                 mouse_pos = pygame.mouse.get_pos()
 
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.detectClick(mouse_pos)
+
                 try:
+
                     if mouse_pos[0] >= self.images_list[self.creatureImage][0] and \
                      mouse_pos[1] >= self.images_list[self.creatureImage][1] and \
                      mouse_pos[0] <= self.images_list[self.creatureImage][0]+self.creatureImage.get_width() and \
@@ -147,11 +158,81 @@ class Hall():
                     crashed = True
 
             blit_images(screen, self.images_list)
+
+            if self.activePanelInventory:
+                screen.blit(self.panelInventory, (0,0))
+            elif self.activePanelStore:
+                screen.blit(self.panelStore, (0,0))
+
             pygame.display.update() # Mostra frame
             self.clock.tick(60) # fps
         pygame.quit()
         quit()
 
+    def loadImages(self):
+        self.btnIventory = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/Inventory.png").convert_alpha()
+        self.btnIventory = pygame.transform.scale(self.btnIventory, (self.btnIventory.get_width(), self.btnIventory.get_height()))
+        self.images_list[self.btnIventory] = (-20, 290)
+
+        self.btnStore = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/Store.png").convert_alpha()
+        self.btnStore = pygame.transform.scale(self.btnStore, (self.btnStore.get_width(), self.btnStore.get_height()))
+        self.images_list[self.btnStore] = (-20, 360)
+
+        self.btnOptions = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/Options.png").convert_alpha()
+        self.btnOptions = pygame.transform.scale(self.btnOptions, (self.btnOptions.get_width(), self.btnOptions.get_height()))
+        self.images_list[self.btnOptions] = (-20, 430)
+
+        #Paineis dos botões
+        self.panelInventory = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "MenuContent/Inventory.png").convert_alpha()
+        self.panelInventory = pygame.transform.scale(self.panelInventory, (screen_width, screen_height))
+
+        self.panelStore = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "MenuContent/Store.png").convert_alpha()
+        self.panelStore = pygame.transform.scale(self.panelStore, (screen_width, screen_height))
+
+    def detectClick(self, mouse_pos):
+        if self.activePanelInventory:
+            if mouse_pos[0] >= 327 and mouse_pos[1] >= 41 and \
+                mouse_pos[0] <= 353 and mouse_pos[1] <= 64:
+                    self.activePanelInventory = False
+                    self.images_list[self.btnIventory] = (-20, 290)
+
+        elif self.activePanelStore:
+            if mouse_pos[0] >= 327 and mouse_pos[1] >= 41 and \
+                mouse_pos[0] <= 353 and mouse_pos[1] <= 64:
+                    self.activePanelStore = False
+                    self.images_list[self.btnStore] = (-20, 360)
+
+        else:
+            if mouse_pos[0] >= self.images_list[self.btnIventory][0] and \
+                mouse_pos[1] >= self.images_list[self.btnIventory][1] and \
+                mouse_pos[0] <= self.images_list[self.btnIventory][0]+self.btnIventory.get_width() and \
+                mouse_pos[1] <= self.images_list[self.btnIventory][1]+self.btnIventory.get_height():
+                self.images_list[self.btnIventory] = (0, 290)
+                self.images_list[self.btnStore] = (-20, 360)
+                self.images_list[self.btnOptions] = (-20, 430)
+                self.activePanelInventory = True
+
+            elif mouse_pos[0] >= self.images_list[self.btnStore][0] and \
+                mouse_pos[1] >= self.images_list[self.btnStore][1] and \
+                mouse_pos[0] <= self.images_list[self.btnStore][0]+self.btnStore.get_width() and \
+                mouse_pos[1] <= self.images_list[self.btnStore][1]+self.btnStore.get_height():
+                self.images_list[self.btnIventory] = (-20, 290)
+                self.images_list[self.btnStore] = (0, 360)
+                self.images_list[self.btnOptions] = (-20, 430)
+                self.activePanelStore = True
+
+            elif mouse_pos[0] >= self.images_list[self.btnOptions][0] and \
+                mouse_pos[1] >= self.images_list[self.btnOptions][1] and \
+                mouse_pos[0] <= self.images_list[self.btnOptions][0]+self.btnOptions.get_width() and \
+                mouse_pos[1] <= self.images_list[self.btnOptions][1]+self.btnOptions.get_height():
+                self.images_list[self.btnIventory] = (-20, 290)
+                self.images_list[self.btnStore] = (-20, 360)
+                self.images_list[self.btnOptions] = (0, 430)
 
 class Menu():
     def __init__(self):

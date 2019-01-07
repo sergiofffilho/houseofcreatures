@@ -24,6 +24,9 @@ class HUD():
 
     def loop(self):
         crashed = False
+
+        self.qtd_food = 99
+
         self.activePanelMinijogos = False
         self.activePanelInventory = False
         self.activePanelStore = False
@@ -48,6 +51,9 @@ class HUD():
                 self.screen.blit(self.iconRope, (31,98))
             elif self.activePanelInventory:
                 self.screen.blit(self.panelInventory, (0,0))
+                self.screen.blit(self.iconFood, (31,98))
+                self.screen.blit(self.text_qtd_food, (31,98))
+
             elif self.activePanelStore:
                 self.screen.blit(self.panelStore, (0,0))
 
@@ -124,12 +130,12 @@ class HUD():
         #Imagens dos botões do Menu
 
         self.btnAchievements = pygame.image.load("../../images/UI_Houseofcreatures/"+\
-            "Buttons/Achievements.png").convert_alpha()
+            "Buttons/AchievementsNEW.png").convert_alpha()
         self.btnAchievements = pygame.transform.scale(self.btnAchievements, (self.btnAchievements.get_width(), self.btnAchievements.get_height()))
         self.images_list[self.btnAchievements] = (-20, 150)
 
         self.btnGrooming = pygame.image.load("../../images/UI_Houseofcreatures/"+\
-            "Buttons/Grooming.png").convert_alpha()
+            "Buttons/GroomingNEw.png").convert_alpha()
         self.btnGrooming = pygame.transform.scale(self.btnGrooming, (self.btnGrooming.get_width(), self.btnGrooming.get_height()))
         self.images_list[self.btnGrooming] = (-20, 220)
 
@@ -176,6 +182,12 @@ class HUD():
             "MenuContent/Inventory.png").convert_alpha()
         self.panelInventory = pygame.transform.scale(self.panelInventory, (self.screen.get_width(), self.screen.get_height()))
 
+        self.iconFood = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/can_of_food.png").convert_alpha()
+        self.iconFood = pygame.transform.scale(self.iconFood, (self.iconFood.get_width(), self.iconFood.get_height()))
+
+        self.text_qtd_food = self.font_coins.render("x" + str(self.qtd_food), False, (0, 0, 0))
+
         self.panelStore = pygame.image.load("../../images/UI_Houseofcreatures/"+\
             "MenuContent/Store.png").convert_alpha()
         self.panelStore = pygame.transform.scale(self.panelStore, (self.screen.get_width(), self.screen.get_height()))
@@ -194,11 +206,11 @@ class HUD():
             self.old_key_hun = new_key_hun
         self.images_list[new_key_hun] = (10,35)
 
-        new_key_hig = self.checkHygiene()
-        if new_key_hig != self.old_key_hig:
-            del self.images_list[self.old_key_hig]
-            self.old_key_hig = new_key_hig
-        self.images_list[new_key_hig] = (10,60)
+##        new_key_hig = self.checkHygiene()
+##        if new_key_hig != self.old_key_hig:
+##            del self.images_list[self.old_key_hig]
+##            self.old_key_hig = new_key_hig
+##        self.images_list[new_key_hig] = (10,60)
 
     def checkHapness(self):
         new_h = self.player.creatures.autoDecreaseHapness(self.timeHap, self.hapness)
