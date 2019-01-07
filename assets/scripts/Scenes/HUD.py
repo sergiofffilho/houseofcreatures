@@ -184,7 +184,7 @@ class HUD():
 
         self.iconFood = pygame.image.load("../../images/UI_Houseofcreatures/"+\
             "Buttons/can_of_food.png").convert_alpha()
-        self.iconFood = pygame.transform.scale(self.iconFood, (self.iconFood.get_width(), self.iconFood.get_height()))
+        self.iconFood = pygame.transform.scale(self.iconFood, (self.iconFood.get_width()/3, self.iconFood.get_height()/3))
 
         self.text_qtd_food = self.font_coins.render("x" + str(self.qtd_food), False, (0, 0, 0))
 
