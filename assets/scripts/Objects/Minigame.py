@@ -2,8 +2,9 @@
 
 class Minigame:
     #Método de inicialização
-    def __init__(self, HUD, player, screen, hapnessGain, hungryCost, hygieneCost, score, difficultMultiplier):
+    def __init__(self, HUD, hall, player, screen, hapnessGain, hungryCost, hygieneCost, score, difficultMultiplier):
         self._HUD = HUD
+        self._hall = hall
         self._player = player
         self._screen = screen
         self._hapnessGain = hapnessGain
@@ -17,6 +18,13 @@ class Minigame:
         return value / 10
 
     #Métodos getters e setters
+    @property
+    def hall(self):
+        return self._hall
+    @hall.setter
+    def hall(self, value):
+        self._hall = value
+
     @property
     def HUD(self):
         return self._HUD

@@ -6,9 +6,9 @@ from utils import blit_images
 
 
 class RopeSkip(Minigame):
-    def __init__(self, HUD, player, screen, hapnessGain, hungryCost, hygieneCost, score,\
+    def __init__(self, HUD, hall, player, screen, hapnessGain, hungryCost, hygieneCost, score,\
      difficultMultuplier, jumpCounter = 0):
-        Minigame.__init__(self, HUD, player, screen, hapnessGain, hungryCost, hygieneCost, score, difficultMultuplier)
+        Minigame.__init__(self, HUD, hall, player, screen, hapnessGain, hungryCost, hygieneCost, score, difficultMultuplier)
         self._jumpCounter = jumpCounter
 
         if difficultMultuplier == 3:
@@ -150,7 +150,7 @@ class RopeSkip(Minigame):
         self.player.creatures.hapness += self.hapnessGain
         self.player.creatures.hungry -= self.hungryCost
         self.player.creatures.hygiene -= self.hygieneCost
-        self.HUD.__init__(self.player, self.screen)
+        self.HUD.__init__(self.hall, self.player, self.screen)
         self.HUD.loop()
 
     #Métodos getters e setters

@@ -21,12 +21,6 @@ class Hall():
         self.bubble2 = pygame.image.load("../../images/icon_bubble2.png").convert_alpha()
         self.bubble2 = pygame.transform.scale(self.bubble2, (self.bubble2.get_width()/10, self.bubble2.get_height()/10))
 
-##        self.font_ballon = pygame.font.SysFont("Arial", 18)
-##        self.text_ballon = self.font_ballon.render("Welcome", False, (0,0,0))
-##        self.text_ballon2 = self.font_ballon.render("tap to continue!", False, (0,0,0))
-##        self.images_list[self.text_ballon] = (70,90)
-##        self.images_list[self.text_ballon2] = (50,110)
-
         self.detective = pygame.image.load("../../images/animal_tutorial_cat.png").convert_alpha()
         self.detective = pygame.transform.scale(self.detective, (self.detective.get_width()/3, self.detective.get_height()/3))
         self.images_list[self.detective] = (screen_width, screen_height - self.detective.get_size()[1])
@@ -68,9 +62,6 @@ class Hall():
                             if not self.firstText:
                                 self.finishDialog = True
                             else:
-##                                del self.images_list[self.text_ballon], self.images_list[self.text_ballon2]
-##                                self.text_ballon = self.font_ballon.render("Open the box!", False, (0,0,0))
-##                                self.images_list[self.text_ballon] = (50,110)
                                 del self.images_list[self.bubble]
                                 self.images_list[self.bubble2] = (20,55)
 
@@ -124,19 +115,16 @@ class Hall():
 
         self.images_list[self.creatureImage] = (120,300)
 
-        self.loop()
+        self.loop(self.player)
 
-    def loop(self):
+    def loop(self, player):
+        self.player = player
+
         crashed = False
-        #self.button_choice = pygame.image.load("../../images/button_login.png").convert_alpha()
-        #self.button_choice = pygame.transform.scale(self.button_choice, \
-           # (self.button_choice.get_width()/2, self.button_choice.get_height()/5))
-        #self.images_list[self.button_choice] = (20,42)
 
         self.font_choice = pygame.font.Font("../../fonts/PORKYS_.ttf", 50)
         self.text_choice = self.font_choice.render("Pick One!", False, (0,0,0))
         self.images_list[self.text_choice] = (80,55)
-
 
         while not crashed:
             screen.blit(self.background,(0,0))
@@ -150,7 +138,7 @@ class Hall():
                      mouse_pos[0] <= self.images_list[self.creatureImage][0]+self.creatureImage.get_width() and \
                      mouse_pos[1] <= self.images_list[self.creatureImage][1]+self.creatureImage.get_height():
                         if event.type == pygame.MOUSEBUTTONDOWN:
-                            h = HUD(self.player, screen)
+                            h = HUD(self, self.player, screen)
                             h.loop()
                 except KeyError:
                     pass
@@ -171,7 +159,6 @@ class Menu():
 
         self.backgroundsplash = pygame.image.load("../../images/backgroundSplash.png").convert_alpha()
         self.backgroundsplash = pygame.transform.scale(self.backgroundsplash, (screen_width, screen_height))
-##        self.images_list[self.backgroundsplash] = (0,0)
 
         self.button_login = pygame.image.load("../../images/playBT.png").convert_alpha()
         self.button_login = pygame.transform.scale(self.button_login, (130,70))

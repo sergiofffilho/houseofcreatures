@@ -42,12 +42,12 @@ def setup():
 
     return player, inventory, store
 
-def initiateRoadSkip(HUD, player, screen):
+def initiateRoadSkip(HUD, hall, player, screen):
     hapGain, hunCost, higCost = 30, 30, 10
     score = 0
     difficult = 1
 
-    rS = RopeSkip(HUD, player, screen, hapGain, hunCost, higCost, score, difficult)
+    rS = RopeSkip(HUD, hall, player, screen, hapGain, hunCost, higCost, score, difficult)
 ##    print rS.player, rS.screen, rS.hapnessGain, rS.hungryCost, rS.hygieneCost, rS.score, rS.difficultMultiplier
 ##    rS.scoreToCoins()
     rS.update()
