@@ -24,6 +24,7 @@ class HUD():
 
     def loop(self):
         crashed = False
+        self.activePanelMinijogos = False
 
         self.loadImages()
 
@@ -40,6 +41,10 @@ class HUD():
                     crashed = True
 
             blit_images(self.screen, self.images_list)
+            if self.activePanelMinijogos:
+                self.screen.blit(self.panelMinijogos, (0,0))
+                self.screen.blit(self.iconRope, (31,98))
+
             pygame.display.update() # Mostra frame
             self.clock.tick(60) # fps
         pygame.quit()
@@ -152,6 +157,16 @@ class HUD():
         self.text_coins = self.font_coins.render(str(self.player.coins), False, (255,255,255))
         self.images_list[self.text_coins] = (280,545)
 
+        #Paineis dos botões
+        self.panelMinijogos = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "MenuContent/Minijogos.png").convert_alpha()
+        self.panelMinijogos = pygame.transform.scale(self.panelMinijogos, (self.screen.get_width(), self.screen.get_height()))
+
+        self.iconRope = pygame.image.load("../../images/UI_Houseofcreatures/"+\
+            "Buttons/MiniGame_Rope.png").convert_alpha()
+        self.iconRope = pygame.transform.scale(self.iconRope, (70, 68))
+
+
     def mountHUD(self):
         new_key_hap = self.checkHapness()
         if new_key_hap != self.old_key_hap:
@@ -220,74 +235,85 @@ class HUD():
             return self.barHigEmpty
 
     def detectClick(self, mouse_pos):
-        if mouse_pos[0] >= self.images_list[self.btnAchievements][0] and \
-            mouse_pos[1] >= self.images_list[self.btnAchievements][1] and \
-            mouse_pos[0] <= self.images_list[self.btnAchievements][0]+self.btnAchievements.get_width() and \
-            mouse_pos[1] <= self.images_list[self.btnAchievements][1]+self.btnAchievements.get_height():
-            self.images_list[self.btnAchievements] = (0, 150)
-            self.images_list[self.btnGrooming] = (-20, 220)
-            self.images_list[self.btnIventory] = (-20, 290)
-            self.images_list[self.btnStore] = (-20, 360)
-            self.images_list[self.btnHome] = (-20, 430)
-            self.images_list[self.btnOptions] = (-20, 500)
-            initiateRoadSkip(self, self.hall, self.player, self.screen)
+        if self.activePanelMinijogos:
+##            print mouse_pos
+            if mouse_pos[0] >= 327 and mouse_pos[1] >= 41 and \
+                mouse_pos[0] <= 353 and mouse_pos[1] <= 64:
+                    self.activePanelMinijogos = False
+                    self.images_list[self.btnAchievements] = (-20, 150)
+            if mouse_pos[0] >= 36 and mouse_pos[1] >= 102 and \
+                mouse_pos[0] <= 95 and mouse_pos[1] <= 160:
+                initiateRoadSkip(self, self.hall, self.player, self.screen)
 
-        elif mouse_pos[0] >= self.images_list[self.btnGrooming][0] and \
-            mouse_pos[1] >= self.images_list[self.btnGrooming][1] and \
-            mouse_pos[0] <= self.images_list[self.btnGrooming][0]+self.btnGrooming.get_width() and \
-            mouse_pos[1] <= self.images_list[self.btnGrooming][1]+self.btnGrooming.get_height():
-            self.images_list[self.btnAchievements] = (-20, 150)
-            self.images_list[self.btnGrooming] = (0, 220)
-            self.images_list[self.btnIventory] = (-20, 290)
-            self.images_list[self.btnStore] = (-20, 360)
-            self.images_list[self.btnHome] = (-20, 430)
-            self.images_list[self.btnOptions] = (-20, 500)
+        else:
+            if mouse_pos[0] >= self.images_list[self.btnAchievements][0] and \
+                mouse_pos[1] >= self.images_list[self.btnAchievements][1] and \
+                mouse_pos[0] <= self.images_list[self.btnAchievements][0]+self.btnAchievements.get_width() and \
+                mouse_pos[1] <= self.images_list[self.btnAchievements][1]+self.btnAchievements.get_height():
+                self.images_list[self.btnAchievements] = (0, 150)
+                self.images_list[self.btnGrooming] = (-20, 220)
+                self.images_list[self.btnIventory] = (-20, 290)
+                self.images_list[self.btnStore] = (-20, 360)
+                self.images_list[self.btnHome] = (-20, 430)
+                self.images_list[self.btnOptions] = (-20, 500)
+                self.activePanelMinijogos = True
 
-        elif mouse_pos[0] >= self.images_list[self.btnIventory][0] and \
-            mouse_pos[1] >= self.images_list[self.btnIventory][1] and \
-            mouse_pos[0] <= self.images_list[self.btnIventory][0]+self.btnIventory.get_width() and \
-            mouse_pos[1] <= self.images_list[self.btnIventory][1]+self.btnIventory.get_height():
-            self.images_list[self.btnAchievements] = (-20, 150)
-            self.images_list[self.btnGrooming] = (-20, 220)
-            self.images_list[self.btnIventory] = (0, 290)
-            self.images_list[self.btnStore] = (-20, 360)
-            self.images_list[self.btnHome] = (-20, 430)
-            self.images_list[self.btnOptions] = (-20, 500)
+            elif mouse_pos[0] >= self.images_list[self.btnGrooming][0] and \
+                mouse_pos[1] >= self.images_list[self.btnGrooming][1] and \
+                mouse_pos[0] <= self.images_list[self.btnGrooming][0]+self.btnGrooming.get_width() and \
+                mouse_pos[1] <= self.images_list[self.btnGrooming][1]+self.btnGrooming.get_height():
+                self.images_list[self.btnAchievements] = (-20, 150)
+                self.images_list[self.btnGrooming] = (0, 220)
+                self.images_list[self.btnIventory] = (-20, 290)
+                self.images_list[self.btnStore] = (-20, 360)
+                self.images_list[self.btnHome] = (-20, 430)
+                self.images_list[self.btnOptions] = (-20, 500)
 
-        elif mouse_pos[0] >= self.images_list[self.btnStore][0] and \
-            mouse_pos[1] >= self.images_list[self.btnStore][1] and \
-            mouse_pos[0] <= self.images_list[self.btnStore][0]+self.btnStore.get_width() and \
-            mouse_pos[1] <= self.images_list[self.btnStore][1]+self.btnStore.get_height():
-            self.images_list[self.btnAchievements] = (-20, 150)
-            self.images_list[self.btnGrooming] = (-20, 220)
-            self.images_list[self.btnIventory] = (-20, 290)
-            self.images_list[self.btnStore] = (0, 360)
-            self.images_list[self.btnHome] = (-20, 430)
-            self.images_list[self.btnOptions] = (-20, 500)
+            elif mouse_pos[0] >= self.images_list[self.btnIventory][0] and \
+                mouse_pos[1] >= self.images_list[self.btnIventory][1] and \
+                mouse_pos[0] <= self.images_list[self.btnIventory][0]+self.btnIventory.get_width() and \
+                mouse_pos[1] <= self.images_list[self.btnIventory][1]+self.btnIventory.get_height():
+                self.images_list[self.btnAchievements] = (-20, 150)
+                self.images_list[self.btnGrooming] = (-20, 220)
+                self.images_list[self.btnIventory] = (0, 290)
+                self.images_list[self.btnStore] = (-20, 360)
+                self.images_list[self.btnHome] = (-20, 430)
+                self.images_list[self.btnOptions] = (-20, 500)
 
-        elif mouse_pos[0] >= self.images_list[self.btnHome][0] and \
-            mouse_pos[1] >= self.images_list[self.btnHome][1] and \
-            mouse_pos[0] <= self.images_list[self.btnHome][0]+self.btnHome.get_width() and \
-            mouse_pos[1] <= self.images_list[self.btnHome][1]+self.btnHome.get_height():
-            self.images_list[self.btnAchievements] = (-20, 150)
-            self.images_list[self.btnGrooming] = (-20, 220)
-            self.images_list[self.btnIventory] = (-20, 290)
-            self.images_list[self.btnStore] = (-20, 360)
-            self.images_list[self.btnHome] = (0, 430)
-            self.images_list[self.btnOptions] = (-20, 500)
-            self.player.creatures.hapness = self.hapness
-            self.hall.loop(self.player)
+            elif mouse_pos[0] >= self.images_list[self.btnStore][0] and \
+                mouse_pos[1] >= self.images_list[self.btnStore][1] and \
+                mouse_pos[0] <= self.images_list[self.btnStore][0]+self.btnStore.get_width() and \
+                mouse_pos[1] <= self.images_list[self.btnStore][1]+self.btnStore.get_height():
+                self.images_list[self.btnAchievements] = (-20, 150)
+                self.images_list[self.btnGrooming] = (-20, 220)
+                self.images_list[self.btnIventory] = (-20, 290)
+                self.images_list[self.btnStore] = (0, 360)
+                self.images_list[self.btnHome] = (-20, 430)
+                self.images_list[self.btnOptions] = (-20, 500)
 
-        elif mouse_pos[0] >= self.images_list[self.btnOptions][0] and \
-            mouse_pos[1] >= self.images_list[self.btnOptions][1] and \
-            mouse_pos[0] <= self.images_list[self.btnOptions][0]+self.btnOptions.get_width() and \
-            mouse_pos[1] <= self.images_list[self.btnOptions][1]+self.btnOptions.get_height():
-            self.images_list[self.btnAchievements] = (-20, 150)
-            self.images_list[self.btnGrooming] = (-20, 220)
-            self.images_list[self.btnIventory] = (-20, 290)
-            self.images_list[self.btnStore] = (-20, 360)
-            self.images_list[self.btnHome] = (-20, 430)
-            self.images_list[self.btnOptions] = (0, 500)
+            elif mouse_pos[0] >= self.images_list[self.btnHome][0] and \
+                mouse_pos[1] >= self.images_list[self.btnHome][1] and \
+                mouse_pos[0] <= self.images_list[self.btnHome][0]+self.btnHome.get_width() and \
+                mouse_pos[1] <= self.images_list[self.btnHome][1]+self.btnHome.get_height():
+                self.images_list[self.btnAchievements] = (-20, 150)
+                self.images_list[self.btnGrooming] = (-20, 220)
+                self.images_list[self.btnIventory] = (-20, 290)
+                self.images_list[self.btnStore] = (-20, 360)
+                self.images_list[self.btnHome] = (0, 430)
+                self.images_list[self.btnOptions] = (-20, 500)
+                self.player.creatures.hapness = self.hapness
+                self.hall.loop(self.player)
+
+            elif mouse_pos[0] >= self.images_list[self.btnOptions][0] and \
+                mouse_pos[1] >= self.images_list[self.btnOptions][1] and \
+                mouse_pos[0] <= self.images_list[self.btnOptions][0]+self.btnOptions.get_width() and \
+                mouse_pos[1] <= self.images_list[self.btnOptions][1]+self.btnOptions.get_height():
+                self.images_list[self.btnAchievements] = (-20, 150)
+                self.images_list[self.btnGrooming] = (-20, 220)
+                self.images_list[self.btnIventory] = (-20, 290)
+                self.images_list[self.btnStore] = (-20, 360)
+                self.images_list[self.btnHome] = (-20, 430)
+                self.images_list[self.btnOptions] = (0, 500)
 
 
 
